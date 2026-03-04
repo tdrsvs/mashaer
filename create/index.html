@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>مشاعر</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- الخطوط -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* جميع الأنماط الأصلية بدون تغيير */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #fcf3f0;
+      font-family: 'Tajawal', sans-serif;
+      color: #3f2b2b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .background-symbols {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .background-symbols i {
+      position: absolute;
+      color: rgba(190, 120, 120, 0.15);
+      font-size: 4rem;
+      transform: rotate(10deg);
+      user-select: none;
+    }
+
+    .background-symbols i:nth-child(1) { top: 5%; left: 3%; transform: rotate(-5deg); font-size: 5rem; }
+    .background-symbols i:nth-child(2) { bottom: 15%; right: 8%; transform: rotate(15deg); font-size: 6rem; }
+    .background-symbols i:nth-child(3) { top: 20%; right: 15%; transform: rotate(20deg); font-size: 4.5rem; }
+    .background-symbols i:nth-child(4) { bottom: 25%; left: 12%; transform: rotate(-10deg); font-size: 5.5rem; }
+    .background-symbols i:nth-child(5) { top: 60%; left: 20%; transform: rotate(25deg); font-size: 4rem; }
+    .background-symbols i:nth-child(6) { bottom: 40%; right: 20%; transform: rotate(-15deg); font-size: 5rem; }
+    .background-symbols i:nth-child(7) { top: 75%; right: 30%; transform: rotate(5deg); font-size: 6rem; }
+    .background-symbols i:nth-child(8) { bottom: 5%; left: 25%; transform: rotate(-20deg); font-size: 4.2rem; }
+    .background-symbols i:nth-child(9) { top: 10%; left: 40%; transform: rotate(12deg); font-size: 5rem; }
+    .background-symbols i:nth-child(10) { top: 45%; right: 45%; transform: rotate(-8deg); font-size: 6rem; }
+
+    .app-wrapper {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1rem 1rem 0;
+    }
+
+    .desktop-nav {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: rgba(255, 245, 240, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 60px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px rgba(120, 60, 60, 0.1);
+      border: 1px solid rgba(200, 140, 140, 0.3);
+    }
+
+    .desktop-logo {
+      font-family: 'Amiri', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #8f4a4a;
+      letter-spacing: -0.5px;
+    }
+
+    .desktop-menu {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .desktop-menu a {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #5f3a3a;
+      text-decoration: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .desktop-menu a i {
+      font-size: 1.3rem;
+      color: #b17575;
+    }
+
+    .desktop-menu a:hover {
+      background: #eed8d8;
+      color: #632b2b;
+    }
+
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem 1rem 6rem;
+      margin-top: 0.5rem;
+    }
+
+    .page-title {
+      font-family: 'Amiri', serif;
+      font-size: 2.5rem;
+      color: #7a3e3e;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 2px 8px rgba(170, 100, 100, 0.2);
+    }
+
+    .heart-divider {
+      width: 150px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c58f8f, #b56e6e, #c58f8f, transparent);
+      margin: 0.5rem auto 2rem;
+    }
+
+    .template-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0 2.5rem;
+    }
+
+    .template-card {
+      background: rgba(255, 245, 240, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(200, 140, 140, 0.3);
+      border-radius: 50px;
+      padding: 1rem 1.8rem;
+      min-width: 120px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(120, 60, 60, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .template-card i {
+      font-size: 2rem;
+      color: #b17575;
+    }
+
+    .template-card span {
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #5f3a3a;
+    }
+
+    .template-card.active {
+      background: #eed8d8;
+      border-color: #b56e6e;
+      box-shadow: 0 0 15px #dba5a5, 0 10px 20px rgba(150, 70, 70, 0.2);
+      transform: scale(1.03);
+    }
+
+    .template-card.active i {
+      color: #8f4a4a;
+    }
+
+    .form-container {
+      background: rgba(255, 245, 240, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(200, 140, 140, 0.3);
+      border-radius: 60px;
+      padding: 2.2rem 2rem;
+      box-shadow: 0 15px 30px rgba(120, 60, 60, 0.15);
+      width: 100%;
+      transition: all 0.3s;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+    }
+
+    label {
+      display: block;
+      font-size: 1.2rem;
+      color: #634646;
+      margin-bottom: 0.5rem;
+      padding-right: 1rem;
+      font-weight: 400;
+    }
+
+    label i {
+      color: #b17575;
+      margin-left: 0.5rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      background: #f7e4e4;
+      border: 1.5px solid #dbb6b6;
+      border-radius: 45px;
+      padding: 1rem 1.8rem;
+      font-family: 'Tajawal', sans-serif;
+      font-size: 1.1rem;
+      color: #3f2b2b;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    textarea {
+      border-radius: 40px;
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #b56e6e;
+      box-shadow: 0 0 0 3px rgba(200, 120, 120, 0.2);
+      background: #ffefef;
+    }
+
+    .expiry-options {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .expiry-option {
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .expiry-option input[type="radio"] {
+      display: none;
+    }
+
+    .expiry-option label {
+      display: block;
+      text-align: center;
+      background: #f7e4e4;
+      border: 1.5px solid #dbb6b6;
+      border-radius: 50px;
+      padding: 0.9rem 1rem;
+      font-size: 1.2rem;
+      color: #5f3a3a;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin: 0;
+    }
+
+    .expiry-option input[type="radio"]:checked + label {
+      background: #dbb6b6;
+      border-color: #b56e6e;
+      color: #3f2b2b;
+      box-shadow: 0 0 12px #dba5a5;
+    }
+
+    .create-btn {
+      display: inline-block;
+      background: #ac6f6f;
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border-radius: 60px;
+      text-decoration: none;
+      font-size: 1.8rem;
+      font-family: 'Amiri', serif;
+      font-weight: 700;
+      border: none;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 10px 20px rgba(150, 70, 70, 0.3);
+      margin-top: 1.5rem;
+    }
+
+    .create-btn i {
+      margin-right: 0.8rem;
+    }
+
+    .create-btn:hover {
+      background: #8f5e5e;
+      transform: translateY(-2px);
+      box-shadow: 0 15px 25px rgba(150, 70, 70, 0.4);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* عارض الرسالة (يضاف بدون تغيير التصميم الأصلي) */
+    .message-viewer {
+      background: rgba(255, 245, 240, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(200, 140, 140, 0.3);
+      border-radius: 60px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(120, 60, 60, 0.2);
+      width: 100%;
+      text-align: center;
+      font-family: 'Amiri', serif;
+    }
+
+    .message-viewer .viewer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .viewer-field {
+      background: #f7e4e4;
+      border-radius: 45px;
+      padding: 1rem 2rem;
+      color: #3f2b2b;
+      font-size: 1.3rem;
+      border: 1px solid #dbb6b6;
+    }
+
+    .viewer-question {
+      font-size: 1.8rem;
+      color: #7a3e3e;
+      margin: 1rem 0;
+    }
+
+    .reject-buttons {
+      position: relative;
+      min-height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .btn-yes, .btn-no {
+      background: #ac6f6f;
+      color: white;
+      border: none;
+      border-radius: 60px;
+      padding: 1rem 2.5rem;
+      font-size: 1.8rem;
+      font-family: 'Amiri', serif;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(150, 70, 70, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-yes:hover, .btn-no:hover {
+      background: #8f5e5e;
+      transform: scale(1.02);
+    }
+
+    .btn-no {
+      position: absolute;
+      left: 30%;
+      top: 0;
+    }
+
+    .confirmation-message {
+      font-size: 2.5rem;
+      color: #ac6f6f;
+      text-shadow: 0 0 20px #dba5a5;
+      animation: glowPulse 2s infinite;
+    }
+
+    @keyframes glowPulse {
+      0% { text-shadow: 0 0 10px #dba5a5; }
+      50% { text-shadow: 0 0 30px #dba5a5, 0 0 10px #ffcaca; }
+      100% { text-shadow: 0 0 10px #dba5a5; }
+    }
+
+    .expired-message {
+      font-size: 2rem;
+      color: #a16767;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .new-message-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #ac6f6f;
+      font-size: 1.4rem;
+      text-decoration: none;
+      border: 1px solid #ac6f6f;
+      border-radius: 40px;
+      padding: 0.5rem 2rem;
+      transition: all 0.2s;
+    }
+
+    .new-message-link:hover {
+      background: #ac6f6f;
+      color: white;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(250, 240, 235, 0.9);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(180, 120, 120, 0.3);
+      box-shadow: 0 -5px 25px rgba(100, 50, 50, 0.1);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.7rem 1rem 1.2rem;
+      z-index: 40;
+      border-radius: 35px 35px 0 0;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #7a5555;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      gap: 0.2rem;
+      flex: 1;
+      max-width: 80px;
+    }
+
+    .nav-item i {
+      font-size: 1.9rem;
+      color: #aa7373;
+      margin-bottom: 0.1rem;
+    }
+
+    .nav-item.active i,
+    .nav-item.active span {
+      color: #b14242;
+      font-weight: 500;
+    }
+
+    .nav-item span {
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(60, 30, 30, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: #fff7f2;
+      border-radius: 50px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 30px 60px rgba(80, 30, 30, 0.3);
+      border: 1px solid rgba(210, 150, 150, 0.5);
+      padding: 2rem 1.8rem;
+      position: relative;
+      animation: fadeScale 0.3s ease;
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: #a16767;
+      cursor: pointer;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #eed2d2;
+    }
+
+    .modal-title {
+      font-family: 'Amiri', serif;
+      font-size: 2.2rem;
+      color: #8b4e4e;
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .modal-option {
+      display: block;
+      width: 100%;
+      text-align: right;
+      padding: 1.2rem 1.5rem;
+      margin: 0.5rem 0;
+      background: #f7e4e4;
+      border: 1px solid #dbb6b6;
+      border-radius: 45px;
+      font-size: 1.3rem;
+      color: #4f2e2e;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .modal-option i {
+      margin-left: 0.8rem;
+      color: #bb7a7a;
+    }
+
+    .modal-option:hover {
+      background: #edd4d4;
+      border-color: #b57676;
+    }
+
+    .modal-text-content {
+      font-size: 1.1rem;
+      color: #4f3535;
+      line-height: 1.8;
+      max-height: 50vh;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+    }
+
+    .download-link {
+      display: inline-block;
+      background: #ac6f6f;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    @media (min-width: 768px) {
+      .bottom-nav {
+        display: none;
+      }
+      .desktop-nav {
+        display: flex;
+      }
+      .main-content {
+        padding-bottom: 2rem;
+      }
+      .template-card {
+        min-width: 150px;
+        padding: 1.2rem 2rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .nav-item i {
+        font-size: 1.7rem;
+      }
+      .nav-item span {
+        font-size: 0.75rem;
+      }
+      .modal-card {
+        padding: 1.5rem;
+      }
+      .template-card {
+        min-width: 90px;
+        padding: 0.8rem 1rem;
+      }
+      .template-card i {
+        font-size: 1.6rem;
+      }
+      .template-card span {
+        font-size: 1rem;
+      }
+    }
+
+    a, button, i, div {
+      border-color: #b48b8b;
+    }
+    ::selection {
+      background: #dbb2b2;
+      color: #2f1717;
+    }
+  </style>
+</head>
+<body>
+  <div class="background-symbols">
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+  </div>
+
+  <div class="app-wrapper">
+    <nav class="desktop-nav">
+      <div class="desktop-logo">مشاعر</div>
+      <div class="desktop-menu">
+        <a href="#" class="desktop-home"><i class="fas fa-home"></i> الرئيسية</a>
+        <a href="#" class="desktop-create active"><i class="fas fa-pen"></i> إنشاء</a>
+        <a href="#" id="desktop-settings"><i class="fas fa-cog"></i> إعدادات</a>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <h2 class="page-title"><i class="fas fa-feather-alt" style="margin-left: 0.8rem;"></i> اكتب رسالتك</h2>
+      <div class="heart-divider"></div>
+
+      <!-- قسم اختيار القالب والنماذج -->
+      <div id="formSection">
+        <div class="template-grid" id="templateGrid">
+          <div class="template-card active" data-template="confess">
+            <i class="fas fa-heart"></i>
+            <span>اعتراف</span>
+          </div>
+          <div class="template-card" data-template="apologize">
+            <i class="fas fa-hand-holding-heart"></i>
+            <span>اعتذار</span>
+          </div>
+          <div class="template-card" data-template="special">
+            <i class="fas fa-star"></i>
+            <span>رسالة مميزة</span>
+          </div>
+          <div class="template-card" data-template="reject">
+            <i class="fas fa-dove"></i>
+            <span>رفض الـ لا</span>
+          </div>
+        </div>
+
+        <div class="form-container" id="formContainer">
+          <!-- النموذج العادي -->
+          <div id="normalForm">
+            <div class="form-group">
+              <label><i class="fas fa-user"></i> اسم المرسل</label>
+              <input type="text" placeholder="مثلاً: محمد" id="senderName">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-user-friends"></i> اسم المستلم</label>
+              <input type="text" placeholder="مثلاً: سارة" id="receiverName">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-pen"></i> نص الرسالة</label>
+              <textarea placeholder="اكتب ما تشعر به..." id="messageText"></textarea>
+            </div>
+            <div class="form-group">
+              <label>⏳ مدة الصلاحية</label>
+              <div class="expiry-options">
+                <div class="expiry-option">
+                  <input type="radio" name="expiryNormal" id="exp30min" value="30" checked>
+                  <label for="exp30min">30 دقيقة</label>
+                </div>
+                <div class="expiry-option">
+                  <input type="radio" name="expiryNormal" id="exp1hour" value="60">
+                  <label for="exp1hour">ساعة</label>
+                </div>
+              </div>
+            </div>
+            <button class="create-btn" id="createNormalBtn">إنشاء الرابط <i class="fas fa-link"></i></button>
+          </div>
+
+          <!-- نموذج رفض الـ لا -->
+          <div id="rejectForm" class="hidden">
+            <div class="form-group">
+              <label><i class="fas fa-user"></i> اسم المرسل</label>
+              <input type="text" placeholder="مثلاً: أحمد" id="rejectSender">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-user-friends"></i> اسم المستلم</label>
+              <input type="text" placeholder="مثلاً: ليلى" id="rejectReceiver">
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-comment"></i> رسالة قصيرة</label>
+              <textarea placeholder="كلمة موجزة..." id="shortMessage" rows="2"></textarea>
+            </div>
+            <div class="form-group">
+              <label><i class="fas fa-question-circle"></i> سؤال مخصص</label>
+              <input type="text" placeholder="مثلاً: هل يمكن أن نبقى أصدقاء؟" id="customQuestion">
+            </div>
+            <div class="form-group">
+              <label>⏳ مدة الصلاحية</label>
+              <div class="expiry-options">
+                <div class="expiry-option">
+                  <input type="radio" name="expiryReject" id="rej30min" value="30" checked>
+                  <label for="rej30min">30 دقيقة</label>
+                </div>
+                <div class="expiry-option">
+                  <input type="radio" name="expiryReject" id="rej1hour" value="60">
+                  <label for="rej1hour">ساعة</label>
+                </div>
+              </div>
+            </div>
+            <button class="create-btn" id="createRejectBtn">إنشاء <i class="fas fa-link"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- عارض الرسالة (مخفي افتراضياً) -->
+      <div id="messageViewer" class="message-viewer hidden">
+        <div id="viewerContent" class="viewer-content">
+          <!-- يتم تعبئته ديناميكياً -->
+        </div>
+        <a href="#" id="newMessageLink" class="new-message-link"><i class="fas fa-pen"></i> كتابة رسالة جديدة</a>
+      </div>
+    </main>
+
+    <nav class="bottom-nav">
+      <a href="#" class="nav-item" id="mobile-home"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+      <a href="#" class="nav-item active" id="mobile-create"><i class="fas fa-pen"></i><span>إنشاء</span></a>
+      <a href="#" class="nav-item" id="mobile-settings"><i class="fas fa-cog"></i><span>إعدادات</span></a>
+    </nav>
+  </div>
+
+  <!-- المودالات (بدون تغيير) -->
+  <div id="settings-modal" class="modal-overlay"><div class="modal-card"><button class="modal-close" id="close-settings">&times;</button><div class="modal-title">الإعدادات</div><button class="modal-option" id="privacy-option"><i class="fas fa-lock"></i> سياسة الخصوصية</button><button class="modal-option" id="terms-option"><i class="fas fa-file-contract"></i> شروط الأحكام</button><button class="modal-option" id="download-option"><i class="fas fa-download"></i> تحميل التطبيق</button></div></div>
+  <div id="privacy-modal" class="modal-overlay"><div class="modal-card"><button class="modal-close" id="close-privacy">&times;</button><div class="modal-title">سياسة الخصوصية</div><div class="modal-text-content"><p>نحن في "مشاعر" نهتم بخصوصية بياناتك. جميع مشاعرك وكلماتك آمنة ومشفرة. لا يتم مشاركة أي محتوى مع أطراف ثالثة. يمكنك طلب حذف بياناتك في أي وقت.</p><p>نستخدم المعلومات فقط لتحسين تجربتك العاطفية داخل التطبيق.</p></div></div></div>
+  <div id="terms-modal" class="modal-overlay"><div class="modal-card"><button class="modal-close" id="close-terms">&times;</button><div class="modal-title">شروط الأحكام</div><div class="modal-text-content"><p>باستخدامك لهذه المساحة، أنت توافق على أن تكون صادقاً مع نفسك ومع الآخرين. يمنع نشر خطاب الكراهية أو العنف. نحن نؤمن بأن المشاعر تلامس القلوب بلطف.</p><p>جميع الحقوق محفوظة لفريق "مشاعر" 🌹</p></div></div></div>
+  <div id="download-modal" class="modal-overlay"><div class="modal-card"><button class="modal-close" id="close-download">&times;</button><div class="modal-title">نزّل التطبيق</div><div class="modal-text-content" style="text-align: center;"><i class="fas fa-heart" style="font-size: 4rem; color: #b27a7a; margin-bottom: 1rem;"></i><p>يمكنك تحميل تطبيق "مشاعر" للهواتف والاستمتاع بتجربة أكثر خصوصية.</p><a href="#" class="download-link"><i class="fas fa-mobile-alt"></i> حمل للآيفون</a><a href="#" class="download-link" style="background: #8f5e5e; margin-right: 0.5rem;"><i class="fab fa-android"></i> حمل للأندرويد</a></div></div></div>
+
+  <script>
+    (function() {
+      // ---- الوظائف الحالية للمودالات (بدون تغيير) ----
+      const settingsModal = document.getElementById('settings-modal');
+      const privacyModal = document.getElementById('privacy-modal');
+      const termsModal = document.getElementById('terms-modal');
+      const downloadModal = document.getElementById('download-modal');
+      const mobileSettings = document.getElementById('mobile-settings');
+      const desktopSettings = document.getElementById('desktop-settings');
+      const closeSettings = document.getElementById('close-settings');
+      const closePrivacy = document.getElementById('close-privacy');
+      const closeTerms = document.getElementById('close-terms');
+      const closeDownload = document.getElementById('close-download');
+      const privacyOption = document.getElementById('privacy-option');
+      const termsOption = document.getElementById('terms-option');
+      const downloadOption = document.getElementById('download-option');
+
+      function openSettingsModal(e) { e.preventDefault(); settingsModal.style.display = 'flex'; }
+      mobileSettings.addEventListener('click', openSettingsModal);
+      desktopSettings.addEventListener('click', openSettingsModal);
+      closeSettings.addEventListener('click', () => settingsModal.style.display = 'none');
+      privacyOption.addEventListener('click', () => { settingsModal.style.display = 'none'; privacyModal.style.display = 'flex'; });
+      termsOption.addEventListener('click', () => { settingsModal.style.display = 'none'; termsModal.style.display = 'flex'; });
+      downloadOption.addEventListener('click', () => { settingsModal.style.display = 'none'; downloadModal.style.display = 'flex'; });
+      closePrivacy.addEventListener('click', () => privacyModal.style.display = 'none');
+      closeTerms.addEventListener('click', () => termsModal.style.display = 'none');
+      closeDownload.addEventListener('click', () => downloadModal.style.display = 'none');
+      window.addEventListener('click', (e) => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; });
+
+      // ---- الوظائف الجديدة للتخزين والعرض ----
+      const templateCards = document.querySelectorAll('.template-card');
+      const normalFormDiv = document.getElementById('normalForm');
+      const rejectFormDiv = document.getElementById('rejectForm');
+      const createNormalBtn = document.getElementById('createNormalBtn');
+      const createRejectBtn = document.getElementById('createRejectBtn');
+      const formSection = document.getElementById('formSection');
+      const messageViewer = document.getElementById('messageViewer');
+      const viewerContent = document.getElementById('viewerContent');
+      const newMessageLink = document.getElementById('newMessageLink');
+
+      // تبديل القوالب
+      templateCards.forEach(card => {
+        card.addEventListener('click', function() {
+          templateCards.forEach(c => c.classList.remove('active'));
+          this.classList.add('active');
+          const template = this.dataset.template;
+          if (template === 'reject') {
+            normalFormDiv.classList.add('hidden');
+            rejectFormDiv.classList.remove('hidden');
+          } else {
+            rejectFormDiv.classList.add('hidden');
+            normalFormDiv.classList.remove('hidden');
+          }
+        });
+      });
+
+      // دالة إنشاء معرف عشوائي 6 أرقام
+      function generateId() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+      }
+
+      // دالة لجمع بيانات النموذج حسب القالب النشط
+      function collectFormData() {
+        const activeCard = document.querySelector('.template-card.active');
+        const template = activeCard.dataset.template;
+
+        if (template === 'reject') {
+          const sender = document.getElementById('rejectSender').value.trim() || 'مرسل';
+          const receiver = document.getElementById('rejectReceiver').value.trim() || 'مستلم';
+          const message = document.getElementById('shortMessage').value.trim() || '...';
+          const question = document.getElementById('customQuestion').value.trim() || 'هل تقبل؟';
+          const expiry = document.querySelector('input[name="expiryReject"]:checked')?.value || '30';
+          return { template, sender, receiver, message, question, expiry };
+        } else {
+          const sender = document.getElementById('senderName').value.trim() || 'مرسل';
+          const receiver = document.getElementById('receiverName').value.trim() || 'مستلم';
+          const message = document.getElementById('messageText').value.trim() || '...';
+          const expiry = document.querySelector('input[name="expiryNormal"]:checked')?.value || '30';
+          return { template, sender, receiver, message, question: null, expiry };
+        }
+      }
+
+      // إنشاء الرابط (لكلا الزرين)
+      function handleCreate(e) {
+        e.preventDefault();
+        const data = collectFormData();
+        const id = generateId();
+        const key = 'msg_' + id;
+        const storedData = {
+          template: data.template,
+          sender: data.sender,
+          receiver: data.receiver,
+          message: data.message,
+          question: data.question,
+          expiry: parseInt(data.expiry),
+          createdAt: Date.now()
+        };
+        localStorage.setItem(key, JSON.stringify(storedData));
+        // إعادة التوجيه إلى نفس الصفحة مع id
+        window.location.href = window.location.pathname + '?id=' + id;
+      }
+
+      createNormalBtn.addEventListener('click', handleCreate);
+      createRejectBtn.addEventListener('click', handleCreate);
+
+      // عند تحميل الصفحة: فحص وجود id
+      function loadMessageFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        if (!id) return false; // لا يوجد id
+
+        const key = 'msg_' + id;
+        const raw = localStorage.getItem(key);
+        if (!raw) {
+          // لا توجد رسالة
+          showExpired('الرسالة غير موجودة');
+          return true;
+        }
+
+        const data = JSON.parse(raw);
+        const now = Date.now();
+        const expiryMs = data.expiry * 60 * 1000;
+        if (now > data.createdAt + expiryMs) {
+          showExpired('انتهت صلاحية هذه الرسالة');
+          return true;
+        }
+
+        // إخفاء النموذج وإظهار العارض
+        formSection.classList.add('hidden');
+        messageViewer.classList.remove('hidden');
+        displayMessage(data);
+        return true;
+      }
+
+      function showExpired(text) {
+        formSection.classList.add('hidden');
+        messageViewer.classList.remove('hidden');
+        viewerContent.innerHTML = `<div class="expired-message">${text}</div>`;
+      }
+
+      function displayMessage(data) {
+        const { template, sender, receiver, message, question } = data;
+        let html = '';
+        if (template === 'reject') {
+          html = `
+            <div class="viewer-field"><i class="fas fa-user"></i> ${sender}</div>
+            <div class="viewer-field"><i class="fas fa-user-friends"></i> ${receiver}</div>
+            <div class="viewer-field"><i class="fas fa-comment"></i> ${message}</div>
+            <div class="viewer-question"><i class="fas fa-question-circle"></i> ${question}</div>
+            <div class="reject-buttons" id="rejectButtonsContainer">
+              <button class="btn-yes" id="btnYes">نعم</button>
+              <button class="btn-no" id="btnNo">لا</button>
+            </div>
+          `;
+        } else {
+          html = `
+            <div class="viewer-field"><i class="fas fa-user"></i> ${sender}</div>
+            <div class="viewer-field"><i class="fas fa-user-friends"></i> ${receiver}</div>
+            <div class="viewer-field"><i class="fas fa-heart"></i> ${message}</div>
+          `;
+        }
+        viewerContent.innerHTML = html;
+
+        // إذا كان القالب رفض الـ لا، نفعّل الأزرار
+        if (template === 'reject') {
+          const btnYes = document.getElementById('btnYes');
+          const btnNo = document.getElementById('btnNo');
+          const container = document.getElementById('rejectButtonsContainer');
+          if (btnNo && container) {
+            // تعيين الوضع الابتدائي لـ "لا"
+            btnNo.style.position = 'absolute';
+            // نعم ثابت
+            btnYes.style.position = 'relative';
+            container.style.position = 'relative';
+            container.style.minHeight = '100px';
+            // وضع "لا" بجانب "نعم" مبدئياً
+            positionNoButton(container, btnNo);
+
+            btnNo.addEventListener('click', function(e) {
+              e.preventDefault();
+              positionNoButton(container, btnNo);
+            });
+
+            btnYes.addEventListener('click', function(e) {
+              e.preventDefault();
+              // عرض رسالة تأكيد رومانسية
+              viewerContent.innerHTML = `
+                <div class="confirmation-message">
+                  <i class="fas fa-heart" style="font-size:3rem;"></i>
+                  <p>قُبلت مشاعرك 💫</p>
+                  <i class="fas fa-heart" style="font-size:3rem;"></i>
+                </div>
+              `;
+            });
+          }
+        }
+      }
+
+      function positionNoButton(container, btn) {
+        const cw = container.offsetWidth;
+        const ch = container.offsetHeight;
+        const bw = btn.offsetWidth;
+        const bh = btn.offsetHeight;
+        // التأكد من وجود أبعاد صحيحة
+        if (cw === 0 || ch === 0) {
+          setTimeout(() => positionNoButton(container, btn), 50);
+          return;
+        }
+        const maxLeft = Math.max(0, cw - bw);
+        const maxTop = Math.max(0, ch - bh);
+        const left = Math.random() * maxLeft;
+        const top = Math.random() * maxTop;
+        btn.style.left = left + 'px';
+        btn.style.top = top + 'px';
+      }
+
+      // رابط إنشاء رسالة جديدة: إزالة id وإعادة تحميل الصفحة بدون query
+      newMessageLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = window.location.pathname; // يمسح جميع البارامترات
+      });
+
+      // تنفيذ الفحص عند التحميل
+      if (!loadMessageFromUrl()) {
+        // لا يوجد id، نظهر النموذج (هو ظاهر أصلاً)
+        formSection.classList.remove('hidden');
+        messageViewer.classList.add('hidden');
+      }
+
+      // روابط الرئيسية (للعرض فقط)
+      const mobileHome = document.getElementById('mobile-home');
+      const desktopHome = document.querySelector('.desktop-home');
+      [mobileHome, desktopHome].forEach(link => {
+        if (link) link.addEventListener('click', (e) => { e.preventDefault(); });
+      });
+    })();
+  </script>
+</body>
+</html>
