@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>مشاعر</title>
+  <!-- Font Awesome (أيقونات رفيعة) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- الخطوط: Amiri للعناوين العاطفية، Tajawal للنصوص الواضحة -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== reset ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #fcf3f0;  /* قاعدة دافئة فاتحة جداً */
+      font-family: 'Tajawal', sans-serif;
+      color: #3f2b2b;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    /* خلفية رومانسية برموز حب (قلوب مرسومة بشكل خافت) */
+    .background-symbols {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .background-symbols i {
+      position: absolute;
+      color: rgba(190, 120, 120, 0.15);
+      font-size: 4rem;
+      transform: rotate(10deg);
+      user-select: none;
+    }
+
+    /* توزيع عشوائي للقلوب والزهور */
+    .background-symbols i:nth-child(1) { top: 5%; left: 3%; transform: rotate(-5deg); font-size: 5rem; }
+    .background-symbols i:nth-child(2) { bottom: 15%; right: 8%; transform: rotate(15deg); font-size: 6rem; }
+    .background-symbols i:nth-child(3) { top: 20%; right: 15%; transform: rotate(20deg); font-size: 4.5rem; }
+    .background-symbols i:nth-child(4) { bottom: 25%; left: 12%; transform: rotate(-10deg); font-size: 5.5rem; }
+    .background-symbols i:nth-child(5) { top: 60%; left: 20%; transform: rotate(25deg); font-size: 4rem; }
+    .background-symbols i:nth-child(6) { bottom: 40%; right: 20%; transform: rotate(-15deg); font-size: 5rem; }
+    .background-symbols i:nth-child(7) { top: 75%; right: 30%; transform: rotate(5deg); font-size: 6rem; }
+    .background-symbols i:nth-child(8) { bottom: 5%; left: 25%; transform: rotate(-20deg); font-size: 4.2rem; }
+    .background-symbols i:nth-child(9) { top: 10%; left: 40%; transform: rotate(12deg); font-size: 5rem; }
+    .background-symbols i:nth-child(10) { top: 45%; right: 45%; transform: rotate(-8deg); font-size: 6rem; }
+
+    /* الحاوية الرئيسية */
+    .app-wrapper {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1rem 1rem 0;
+    }
+
+    /* ===== الهيدر للشاشات الكبيرة (يظهر فقط فوق 768px) ===== */
+    .desktop-nav {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+      background: rgba(255, 245, 240, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 60px;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px rgba(120, 60, 60, 0.1);
+      border: 1px solid rgba(200, 140, 140, 0.3);
+    }
+
+    .desktop-logo {
+      font-family: 'Amiri', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #8f4a4a;
+      letter-spacing: -0.5px;
+    }
+
+    .desktop-menu {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .desktop-menu a {
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: #5f3a3a;
+      text-decoration: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .desktop-menu a i {
+      font-size: 1.3rem;
+      color: #b17575;
+    }
+
+    .desktop-menu a:hover {
+      background: #eed8d8;
+      color: #632b2b;
+    }
+
+    /* ===== المحتوى الرئيسي ===== */
+    .main-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1rem 6rem; /* مسافة سفلية للقائمة على الجوال */
+      margin-top: 1rem;
+    }
+
+    .brand-title {
+      font-family: 'Amiri', serif;
+      font-weight: 700;
+      font-size: clamp(4rem, 15vw, 7rem);
+      color: #7a3e3e;
+      text-shadow: 0 4px 15px rgba(170, 100, 100, 0.3);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .brand-description {
+      font-size: clamp(1.2rem, 5vw, 2rem);
+      font-weight: 300;
+      color: #634646;
+      max-width: 700px;
+      margin: 0.5rem auto 2rem;
+      padding: 0 1rem;
+    }
+
+    .heart-divider {
+      width: 150px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #c58f8f, #b56e6e, #c58f8f, transparent);
+      margin: 1rem auto;
+    }
+
+    /* ===== القائمة السفلية (للهواتف) ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #faeaea;
+      backdrop-filter: blur(12px);
+      background: rgba(250, 240, 235, 0.9);
+      border-top: 1px solid rgba(180, 120, 120, 0.3);
+      box-shadow: 0 -5px 25px rgba(100, 50, 50, 0.1);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0.7rem 1rem 1.2rem;
+      z-index: 40;
+      border-radius: 35px 35px 0 0;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: #7a5555;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      gap: 0.2rem;
+      flex: 1;
+      max-width: 80px;
+    }
+
+    .nav-item i {
+      font-size: 1.9rem;
+      color: #aa7373;
+      margin-bottom: 0.1rem;
+    }
+
+    .nav-item.active i,
+    .nav-item.active span {
+      color: #b14242;
+      font-weight: 500;
+    }
+
+    .nav-item span {
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    /* ===== النوافذ المنبثقة (مودالات) ===== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(60, 30, 30, 0.5);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: #fff7f2;
+      border-radius: 50px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 30px 60px rgba(80, 30, 30, 0.3);
+      border: 1px solid rgba(210, 150, 150, 0.5);
+      padding: 2rem 1.8rem;
+      position: relative;
+      animation: fadeScale 0.3s ease;
+    }
+
+    @keyframes fadeScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      color: #a16767;
+      cursor: pointer;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover {
+      background: #eed2d2;
+    }
+
+    .modal-title {
+      font-family: 'Amiri', serif;
+      font-size: 2.2rem;
+      color: #8b4e4e;
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .modal-option {
+      display: block;
+      width: 100%;
+      text-align: right;
+      padding: 1.2rem 1.5rem;
+      margin: 0.5rem 0;
+      background: #f7e4e4;
+      border: 1px solid #dbb6b6;
+      border-radius: 45px;
+      font-size: 1.3rem;
+      color: #4f2e2e;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    .modal-option i {
+      margin-left: 0.8rem;
+      color: #bb7a7a;
+    }
+
+    .modal-option:hover {
+      background: #edd4d4;
+      border-color: #b57676;
+    }
+
+    .modal-text-content {
+      font-size: 1.1rem;
+      color: #4f3535;
+      line-height: 1.8;
+      max-height: 50vh;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+    }
+
+    .download-link {
+      display: inline-block;
+      background: #ac6f6f;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 40px;
+      text-decoration: none;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    /* ===== التجاوب مع الشاشات الكبيرة ===== */
+    @media (min-width: 768px) {
+      .bottom-nav {
+        display: none;  /* إخفاء القائمة السفلية */
+      }
+
+      .desktop-nav {
+        display: flex;  /* إظهار القائمة العلوية */
+      }
+
+      .main-content {
+        padding-bottom: 2rem;  /* إلغاء المسافة السفلية الكبيرة */
+      }
+
+      /* توسيط المحتوى بشكل أوسع */
+      .brand-title {
+        font-size: 7rem;
+      }
+    }
+
+    /* للشاشات الصغيرة جداً تحسين الهوامش */
+    @media (max-width: 400px) {
+      .nav-item i {
+        font-size: 1.7rem;
+      }
+      .nav-item span {
+        font-size: 0.75rem;
+      }
+      .modal-card {
+        padding: 1.5rem;
+      }
+    }
+
+    /* لا أزرق أبداً */
+    a, button, i, div {
+      border-color: #b48b8b;
+    }
+    ::selection {
+      background: #dbb2b2;
+      color: #2f1717;
+    }
+  </style>
+</head>
+<body>
+  <!-- رموز الحب في الخلفية (قلوب وزهور) -->
+  <div class="background-symbols">
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+    <i class="fas fa-heart"></i>
+  </div>
+
+  <!-- القائمة العلوية (سطح المكتب) -->
+  <div class="app-wrapper">
+    <nav class="desktop-nav">
+      <div class="desktop-logo">مشاعر</div>
+      <div class="desktop-menu">
+        <a href="#" class="desktop-home"><i class="fas fa-home"></i> الرئيسية</a>
+        <a href="https://example.com" target="_blank" id="desktop-create"><i class="fas fa-pen"></i> إنشاء</a>
+        <a href="#" id="desktop-settings"><i class="fas fa-cog"></i> إعدادات</a>
+      </div>
+    </nav>
+
+    <!-- المحتوى الأساسي: عنوان ووصف -->
+    <main class="main-content">
+      <h1 class="brand-title">مشاعر</h1>
+      <div class="heart-divider"></div>
+      <p class="brand-description">
+        حيثُ تهمس القلوب بما لا يُقال. مساحة آمنة لأرقّ الأحاسيس.
+      </p>
+      <!-- يمكن إضافة أيقونة صغيرة أو رسمة إضافية هنا إن أردت -->
+    </main>
+
+    <!-- القائمة السفلية (الجوال) -->
+    <nav class="bottom-nav">
+  
+      <a href="https://example.com" target="_blank" class="nav-item" id="mobile-create">
+        <i class="fas fa-pen"></i>
+        <span>إنشاء</span>
+      </a>
+      <a href="#" class="nav-item" id="mobile-settings">
+        <i class="fas fa-cog"></i>
+        <span>إعدادات</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ===== النوافذ المنبثقة (مودالات) ===== -->
+  <!-- مودال الإعدادات الرئيسي (الخيارات) -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close" id="close-settings">&times;</button>
+      <div class="modal-title">الإعدادات</div>
+      <button class="modal-option" id="privacy-option"><i class="fas fa-lock"></i> سياسة الخصوصية</button>
+      <button class="modal-option" id="terms-option"><i class="fas fa-file-contract"></i> شروط الأحكام</button>
+      <button class="modal-option" id="download-option"><i class="fas fa-download"></i> تحميل التطبيق</button>
+    </div>
+  </div>
+
+  <!-- مودال سياسة الخصوصية -->
+  <div id="privacy-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close" id="close-privacy">&times;</button>
+      <div class="modal-title">سياسة الخصوصية</div>
+      <div class="modal-text-content">
+        <p>نحن في "مشاعر" نهتم بخصوصية بياناتك. جميع مشاعرك وكلماتك آمنة ومشفرة. لا يتم مشاركة أي محتوى مع أطراف ثالثة. يمكنك طلب حذف بياناتك في أي وقت.</p>
+        <p>نستخدم المعلومات فقط لتحسين تجربتك العاطفية داخل التطبيق.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال شروط الأحكام -->
+  <div id="terms-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close" id="close-terms">&times;</button>
+      <div class="modal-title">شروط الأحكام</div>
+      <div class="modal-text-content">
+        <p>باستخدامك لهذه المساحة، أنت توافق على أن تكون صادقاً مع نفسك ومع الآخرين. يمنع نشر خطاب الكراهية أو العنف. نحن نؤمن بأن المشاعر تلامس القلوب بلطف.</p>
+        <p>جميع الحقوق محفوظة لفريق "مشاعر" 🌹</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال تحميل التطبيق -->
+  <div id="download-modal" class="modal-overlay">
+    <div class="modal-card">
+      <button class="modal-close" id="close-download">&times;</button>
+      <div class="modal-title">نزّل التطبيق</div>
+      <div class="modal-text-content" style="text-align: center;">
+        <i class="fas fa-heart" style="font-size: 4rem; color: #b27a7a; margin-bottom: 1rem;"></i>
+        <p>يمكنك تحميل تطبيق "مشاعر" للهواتف والاستمتاع بتجربة أكثر خصوصية.</p>
+        <a href="#" class="download-link"><i class="fas fa-mobile-alt"></i> حمل للآيفون</a>
+        <a href="#" class="download-link" style="background: #8f5e5e; margin-right: 0.5rem;"><i class="fab fa-android"></i> حمل للأندرويد</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // جلب العناصر
+      const settingsModal = document.getElementById('settings-modal');
+      const privacyModal = document.getElementById('privacy-modal');
+      const termsModal = document.getElementById('terms-modal');
+      const downloadModal = document.getElementById('download-modal');
+
+      // أزرار فتح الإعدادات (من القائمة العلوية والسفلية)
+      const mobileSettings = document.getElementById('mobile-settings');
+      const desktopSettings = document.getElementById('desktop-settings');
+
+      // أزرار الإغلاق
+      const closeSettings = document.getElementById('close-settings');
+      const closePrivacy = document.getElementById('close-privacy');
+      const closeTerms = document.getElementById('close-terms');
+      const closeDownload = document.getElementById('close-download');
+
+      // خيارات داخل مودال الإعدادات
+      const privacyOption = document.getElementById('privacy-option');
+      const termsOption = document.getElementById('terms-option');
+      const downloadOption = document.getElementById('download-option');
+
+      // فتح مودال الإعدادات
+      function openSettingsModal(e) {
+        e.preventDefault();
+        settingsModal.style.display = 'flex';
+      }
+      mobileSettings.addEventListener('click', openSettingsModal);
+      desktopSettings.addEventListener('click', openSettingsModal);
+
+      // إغلاق مودال الإعدادات
+      closeSettings.addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+      });
+
+      // فتح مودال الخصوصية من الخيار
+      privacyOption.addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+        privacyModal.style.display = 'flex';
+      });
+
+      // فتح مودال الشروط
+      termsOption.addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+        termsModal.style.display = 'flex';
+      });
+
+      // فتح مودال التحميل
+      downloadOption.addEventListener('click', () => {
+        settingsModal.style.display = 'none';
+        downloadModal.style.display = 'flex';
+      });
+
+      // إغلاق المودالات
+      closePrivacy.addEventListener('click', () => {
+        privacyModal.style.display = 'none';
+      });
+      closeTerms.addEventListener('click', () => {
+        termsModal.style.display = 'none';
+      });
+      closeDownload.addEventListener('click', () => {
+        downloadModal.style.display = 'none';
+      });
+
+      // إغلاق عند النقر على الخلفية (اختياري)
+      window.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal-overlay')) {
+          e.target.style.display = 'none';
+        }
+      });
+
+      // منع التمرير خلف المودال (اختياري)
+      const modals = [settingsModal, privacyModal, termsModal, downloadModal];
+      modals.forEach(modal => {
+        modal.addEventListener('wheel', (e) => e.stopPropagation(), { passive: false });
+      });
+
+      // تنشيط العنصر النشط في القائمة السفلية (الرئيسية)
+      const mobileHome = document.getElementById('mobile-home');
+      const desktopHome = document.querySelector('.desktop-home');
+      [mobileHome, desktopHome].forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          // إزالة active من جميع عناصر القائمة السفلية
+          document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+          mobileHome.classList.add('active');
+          // يمكن تمرير الصفحة للأعلى
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      // روابط "إنشاء" تفتح موقع ويب (افتراضي)
+      // (موجودة بالفعل target _blank)
+    })();
+  </script>
+</body>
+</html>
