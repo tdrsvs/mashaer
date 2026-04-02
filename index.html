@@ -1,563 +1,638 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>مشاعر</title>
-  <!-- Font Awesome (أيقونات رفيعة) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- الخطوط: Amiri للعناوين العاطفية، Tajawal للنصوص الواضحة -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    /* ===== reset ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>مشاعر</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;900&family=Amiri:ital,wght@0,400;0,700;1,400&family=Almarai:wght@300;700&family=Reem+Kufi:wght@400;700&family=Lalezar&family=Changa:wght@400;800&family=El+Messiri:wght@400;700&family=Mada:wght@400;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-    body {
-      background-color: #fcf3f0;  /* قاعدة دافئة فاتحة جداً */
-      font-family: 'Tajawal', sans-serif;
-      color: #3f2b2b;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.5;
-      position: relative;
-    }
+    <style>
+    /* تنسيق القوالب العادية - جعلها داكنة وبسيطة */
+.font-card { 
+    background: #121216 !important; /* إجبار اللون الداكن */
+    color: #94949b !important; /* نص رمادي باهت */
+    border: 1px solid #1f1f25 !important; 
+    padding: 12px; 
+    border-radius: 10px; 
+    text-align: center; 
+    font-size: 0.8rem;
+    cursor: pointer; 
+    position: relative;
+    transition: all 0.3s ease;
+}
 
-    /* خلفية رومانسية برموز حب (قلوب مرسومة بشكل خافت) */
-    .background-symbols {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
+/* تنسيق القوالب المميزة (الأكثر استخداماً) */
+.font-card:has(.top-icon) {
+    background: linear-gradient(145deg, #1a1a24, #0d0d12) !important;
+    border: 1px solid rgba(0, 242, 255, 0.5) !important; /* إطار نيوني سماوي */
+    color: #ffffff !important; /* نص أبيض ناصع */
+    transform: translateY(-5px); /* رفع القالب للأعلى */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6), 0 0 15px rgba(0, 242, 255, 0.2);
+    z-index: 2;
+}
 
-    .background-symbols i {
-      position: absolute;
-      color: rgba(190, 120, 120, 0.15);
-      font-size: 4rem;
-      transform: rotate(10deg);
-      user-select: none;
-    }
+/* أيقونة التميز */
+.top-icon {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: #00f2ff;
+    font-size: 0.9rem;
+    filter: drop-shadow(0 0 5px #00f2ff);
+}
 
-    /* توزيع عشوائي للقلوب والزهور */
-    .background-symbols i:nth-child(1) { top: 5%; left: 3%; transform: rotate(-5deg); font-size: 5rem; }
-    .background-symbols i:nth-child(2) { bottom: 15%; right: 8%; transform: rotate(15deg); font-size: 6rem; }
-    .background-symbols i:nth-child(3) { top: 20%; right: 15%; transform: rotate(20deg); font-size: 4.5rem; }
-    .background-symbols i:nth-child(4) { bottom: 25%; left: 12%; transform: rotate(-10deg); font-size: 5.5rem; }
-    .background-symbols i:nth-child(5) { top: 60%; left: 20%; transform: rotate(25deg); font-size: 4rem; }
-    .background-symbols i:nth-child(6) { bottom: 40%; right: 20%; transform: rotate(-15deg); font-size: 5rem; }
-    .background-symbols i:nth-child(7) { top: 75%; right: 30%; transform: rotate(5deg); font-size: 6rem; }
-    .background-symbols i:nth-child(8) { bottom: 5%; left: 25%; transform: rotate(-20deg); font-size: 4.2rem; }
-    .background-symbols i:nth-child(9) { top: 10%; left: 40%; transform: rotate(12deg); font-size: 5rem; }
-    .background-symbols i:nth-child(10) { top: 45%; right: 45%; transform: rotate(-8deg); font-size: 6rem; }
+    /* أيقونة التميز: لون نيوني جذاب */
+.top-icon {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    color: #00f2ff; /* لون سماوي مضيء */
+    font-size: 0.8rem;
+    filter: drop-shadow(0 0 5px #00f2ff);
+}
 
-    /* الحاوية الرئيسية */
-    .app-wrapper {
-      position: relative;
-      z-index: 5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      width: 100%;
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 1rem 1rem 0;
-    }
+/* تنسيق الكارت: إطار مضيء خفيف */
+.font-card:has(.top-icon) {
+    border: 1px solid #00f2ff33 !important; /* إطار شفاف خفيف */
+    background: linear-gradient(145deg, #16161d, #0d0d12) !important;
+    position: relative;
+}
 
-    /* ===== الهيدر للشاشات الكبيرة (يظهر فقط فوق 768px) ===== */
-    .desktop-nav {
-      display: none;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1.5rem 2rem;
-      background: rgba(255, 245, 240, 0.7);
-      backdrop-filter: blur(8px);
-      border-radius: 60px;
-      margin-bottom: 2rem;
-      box-shadow: 0 10px 25px rgba(120, 60, 60, 0.1);
-      border: 1px solid rgba(200, 140, 140, 0.3);
-    }
+/* إضافة كلمة "رائج" أو "مميز" بشكل خفي وأنيق */
+.font-card:has(.top-icon)::after {
+    content: 'الأكثر استخداماً';
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.5rem;
+    color: #00f2ff;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}
 
-    .desktop-logo {
-      font-family: 'Amiri', serif;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #8f4a4a;
-      letter-spacing: -0.5px;
-    }
+/* حركة تدرج لوني هادئة للإطار */
+.font-card:has(.top-icon) {
+    animation: border-glow 4s infinite alternate;
+}
 
-    .desktop-menu {
-      display: flex;
-      gap: 2.5rem;
-      align-items: center;
-    }
+@keyframes border-glow {
+    from { border-color: #00f2ff33; box-shadow: 0 0 5px #00f2ff11; }
+    to { border-color: #7000ff33; box-shadow: 0 0 15px #7000ff22; }
+}
 
-    .desktop-menu a {
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: #5f3a3a;
-      text-decoration: none;
-      padding: 0.5rem 1.2rem;
-      border-radius: 40px;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+        :root {
+            --onyx: #08080a;
+            --card: #121216;
+            --border: #1f1f25;
+            --gold: #d4af37;
+            --pink: #ff4d6d;
+            --text: #ffffff;
+            --dim: #94949b;
+            --premium: linear-gradient(135deg, #d4af37, #f4e1a1);
+        }
 
-    .desktop-menu a i {
-      font-size: 1.3rem;
-      color: #b17575;
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--onyx);
+            color: var(--text);
+            overflow: hidden; width: 100vw; height: 100vh;
+            display: flex; flex-direction: column;
+        }
 
-    .desktop-menu a:hover {
-      background: #eed8d8;
-      color: #632b2b;
-    }
+        /* تم إخفاء الهيدر تماماً */
+        .main-header { display: none; }
 
-    /* ===== المحتوى الرئيسي ===== */
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 2rem 1rem 6rem; /* مسافة سفلية للقائمة على الجوال */
-      margin-top: 1rem;
-    }
+        .app-content { flex: 1; overflow-y: auto; position: relative; padding-bottom: 100px; }
+        .page { display: none; padding: 20px; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    .brand-title {
-      font-family: 'Amiri', serif;
-      font-weight: 700;
-      font-size: clamp(4rem, 15vw, 7rem);
-      color: #7a3e3e;
-      text-shadow: 0 4px 15px rgba(170, 100, 100, 0.3);
-      line-height: 1.1;
-      margin-bottom: 0.5rem;
-    }
+        /* إشعارات التوجيه */
+        .scroll-hint {
+            text-align: center; color: var(--gold); font-size: 0.8rem;
+            margin: 10px 0; opacity: 0.8; font-weight: 500;
+        }
 
-    .brand-description {
-      font-size: clamp(1.2rem, 5vw, 2rem);
-      font-weight: 300;
-      color: #634646;
-      max-width: 700px;
-      margin: 0.5rem auto 2rem;
-      padding: 0 1rem;
-    }
+        .canvas-container {
+            width: 100%; display: flex; justify-content: center; padding: 20px 0;
+        }
+        #artboard {
+            width: 320px; height: 480px; background: #fff;
+            position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
 
-    .heart-divider {
-      width: 150px;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #c58f8f, #b56e6e, #c58f8f, transparent);
-      margin: 1rem auto;
-    }
+        /* القوالب */
+        .tpl-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; display: none; }
+        .tpl-glass .glass-bg { display: block; background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
+        .tpl-glass .glass-item { display: block; position: absolute; inset: 20px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; }
+        .tpl-dark-gold { background: #000 !important; color: var(--gold); }
+        .tpl-dark-gold .frame { display: block; position: absolute; inset: 15px; border: 2px solid var(--gold); }
+        .tpl-marble { background: #f5f5f5 !important; color: #333; }
+        .tpl-marble .texture { display: block; background: url('https://www.transparenttextures.com/patterns/marble-white.png'); opacity: 0.5; }
+        .tpl-night { background: #0a192f !important; color: #fff; }
+        .tpl-night .stars { display: block; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px; opacity: 0.2; }
+        .tpl-minimal { background: #fff !important; color: #ff4d6d; }
+        .tpl-royal-red { background: #4a0404 !important; color: #d4af37; }
+        .tpl-neon { background: #050505 !important; color: #00f2ff; text-shadow: 0 0 10px #00f2ff; }
+        .tpl-vintage { background: #f4ecd8 !important; color: #5d4037; }
+        .tpl-nature { background: #f1f8e9 !important; color: #2e7d32; }
+        .tpl-sunset { background: linear-gradient(to bottom, #ff512f, #dd2476) !important; color: #fff; }
 
-    /* ===== القائمة السفلية (للهواتف) ===== */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #faeaea;
-      backdrop-filter: blur(12px);
-      background: rgba(250, 240, 235, 0.9);
-      border-top: 1px solid rgba(180, 120, 120, 0.3);
-      box-shadow: 0 -5px 25px rgba(100, 50, 50, 0.1);
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      padding: 0.7rem 1rem 1.2rem;
-      z-index: 40;
-      border-radius: 35px 35px 0 0;
-    }
+        .drag-item {
+            position: absolute; z-index: 10; width: 80%; left: 10%;
+            cursor: move; padding: 5px; text-align: center;
+            user-select: none; touch-action: none;
+        }
+        .drag-item.selected { outline: 1px dashed var(--gold); background: rgba(212, 175, 55, 0.1); }
+        .watermark { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px; }
 
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: #7a5555;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      gap: 0.2rem;
-      flex: 1;
-      max-width: 80px;
-    }
+        .control-panel { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); margin-top: 20px; }
+        .prop-title { color: var(--gold); font-size: 0.8rem; font-weight: 800; margin-bottom: 15px; display: block; }
+        .input-field { width: 100%; background: var(--onyx); border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: #fff; margin-bottom: 15px; }
 
-    .nav-item i {
-      font-size: 1.9rem;
-      color: #aa7373;
-      margin-bottom: 0.1rem;
-    }
+        .font-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .font-card { 
+            background: var(--onyx); padding: 12px; border-radius: 10px; text-align: center; font-size: 0.8rem;
+            border: 1px solid transparent; cursor: pointer; position: relative;
+        }
+        .font-card.premium::after { content: '\f023'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; top: 5px; right: 5px; color: var(--gold); font-size: 0.6rem; }
+        .font-card.unlocked::after { content: '\f09c'; color: #4caf50; }
+        .font-card.active { border-color: var(--gold); }
 
-    .nav-item.active i,
-    .nav-item.active span {
-      color: #b14242;
-      font-weight: 500;
-    }
+        .btn-flex { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-action { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+        .btn-gold { background: var(--premium); color: #000; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
 
-    .nav-item span {
-      font-size: 0.85rem;
-      font-weight: 400;
-    }
+        .tank {
+            width: 180px; height: 180px; border-radius: 50%; border: 6px solid var(--border);
+            margin: 0 auto; position: relative; overflow: hidden; background: #000;
+        }
+        .wave {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(to top, var(--pink), var(--gold));
+            transition: height 1s ease-in-out;
+        }
+        .wave::before {
+            content: ""; position: absolute; width: 200%; height: 200%;
+            top: 0; left: 50%; transform: translate(-50%, -75%);
+            background: #000; border-radius: 40%; animation: rotateWave 8s linear infinite;
+        }
+        @keyframes rotateWave { from { transform: translate(-50%, -75%) rotate(0deg); } to { transform: translate(-50%, -75%) rotate(360deg); } }
+        .tank-val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 900; z-index: 10; text-shadow: 0 5px 10px rgba(0,0,0,0.5); }
 
-    /* ===== النوافذ المنبثقة (مودالات) ===== */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(60, 30, 30, 0.5);
-      backdrop-filter: blur(5px);
-      z-index: 100;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
+        .wheel-box { width: 260px; height: 260px; border-radius: 50%; border: 8px solid var(--border); margin: 30px auto; position: relative; transition: transform 6s cubic-bezier(0.1, 0, 0, 1); background: conic-gradient(#ff4d6d, #1a1a20, #d4af37, #1a1a20, #ff4d6d, #1a1a20); }
 
-    .modal-card {
-      background: #fff7f2;
-      border-radius: 50px;
-      max-width: 500px;
-      width: 100%;
-      max-height: 80vh;
-      overflow-y: auto;
-      box-shadow: 0 30px 60px rgba(80, 30, 30, 0.3);
-      border: 1px solid rgba(210, 150, 150, 0.5);
-      padding: 2rem 1.8rem;
-      position: relative;
-      animation: fadeScale 0.3s ease;
-    }
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 80px;
+            background: var(--card); border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; align-items: center; z-index: 2000;
+        }
+        .nav-item { color: var(--dim); display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
+        .nav-item.active { color: var(--gold); }
 
-    @keyframes fadeScale {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      background: none;
-      border: none;
-      font-size: 1.8rem;
-      color: #a16767;
-      cursor: pointer;
-      padding: 0.2rem 0.7rem;
-      border-radius: 30px;
-      transition: background 0.2s;
-    }
-
-    .modal-close:hover {
-      background: #eed2d2;
-    }
-
-    .modal-title {
-      font-family: 'Amiri', serif;
-      font-size: 2.2rem;
-      color: #8b4e4e;
-      margin-bottom: 1.5rem;
-      padding-left: 1.5rem;
-    }
-
-    .modal-option {
-      display: block;
-      width: 100%;
-      text-align: right;
-      padding: 1.2rem 1.5rem;
-      margin: 0.5rem 0;
-      background: #f7e4e4;
-      border: 1px solid #dbb6b6;
-      border-radius: 45px;
-      font-size: 1.3rem;
-      color: #4f2e2e;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      font-family: 'Tajawal', sans-serif;
-    }
-
-    .modal-option i {
-      margin-left: 0.8rem;
-      color: #bb7a7a;
-    }
-
-    .modal-option:hover {
-      background: #edd4d4;
-      border-color: #b57676;
-    }
-
-    .modal-text-content {
-      font-size: 1.1rem;
-      color: #4f3535;
-      line-height: 1.8;
-      max-height: 50vh;
-      overflow-y: auto;
-      padding: 0.5rem 0;
-    }
-
-    .download-link {
-      display: inline-block;
-      background: #ac6f6f;
-      color: white;
-      padding: 1rem 2rem;
-      border-radius: 40px;
-      text-decoration: none;
-      margin-top: 1.5rem;
-      font-size: 1.2rem;
-    }
-
-    /* ===== التجاوب مع الشاشات الكبيرة ===== */
-    @media (min-width: 768px) {
-      .bottom-nav {
-        display: none;  /* إخفاء القائمة السفلية */
-      }
-
-      .desktop-nav {
-        display: flex;  /* إظهار القائمة العلوية */
-      }
-
-      .main-content {
-        padding-bottom: 2rem;  /* إلغاء المسافة السفلية الكبيرة */
-      }
-
-      /* توسيط المحتوى بشكل أوسع */
-      .brand-title {
-        font-size: 7rem;
-      }
-    }
-
-    /* للشاشات الصغيرة جداً تحسين الهوامش */
-    @media (max-width: 400px) {
-      .nav-item i {
-        font-size: 1.7rem;
-      }
-      .nav-item span {
-        font-size: 0.75rem;
-      }
-      .modal-card {
-        padding: 1.5rem;
-      }
-    }
-
-    /* لا أزرق أبداً */
-    a, button, i, div {
-      border-color: #b48b8b;
-    }
-    ::selection {
-      background: #dbb2b2;
-      color: #2f1717;
-    }
-  </style>
+        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 10px 25px; border-radius: 30px; font-weight: 800; z-index: 9999; display: none; }
+    </style>
 </head>
 <body>
-  <!-- رموز الحب في الخلفية (قلوب وزهور) -->
-  <div class="background-symbols">
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-    <i class="fas fa-heart"></i>
-  </div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاعر - Intro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        
+        body, html { 
+            width: 100%; height: 100%; 
+            background-color: #0f0a0e; 
+            overflow: hidden; 
+        }
 
-  <!-- القائمة العلوية (سطح المكتب) -->
-  <div class="app-wrapper">
-    <nav class="desktop-nav">
-      <div class="desktop-logo">مشاعر</div>
-      <div class="desktop-menu">
-        <a href="#" class="desktop-home"><i class="fas fa-home"></i> الرئيسية</a>
-        <a href="https://example.com" target="_blank" id="desktop-create"><i class="fas fa-pen"></i> إنشاء</a>
-        <a href="#" id="desktop-settings"><i class="fas fa-cog"></i> إعدادات</a>
-      </div>
-    </nav>
+        #splashScreen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0f0a0e;
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
 
-    <!-- المحتوى الأساسي: عنوان ووصف -->
-    <main class="main-content">
-      <h1 class="brand-title">مشاعر</h1>
-      <div class="heart-divider"></div>
-      <p class="brand-description">
-        حيثُ تهمس القلوب بما لا يُقال. مساحة آمنة لأرقّ الأحاسيس.
-      </p>
-      <!-- يمكن إضافة أيقونة صغيرة أو رسمة إضافية هنا إن أردت -->
+        .step {
+            position: absolute;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            white-space: nowrap; /* لضمان بقاء النص في سطر واحد */
+            width: 100%;
+        }
+
+        .step.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .step.exit {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+        }
+
+        /* تنسيق Loading */
+        .loading-text {
+            font-size: 1.4rem;
+            color: #fce4ec;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* تنسيق Powered by Drake (سطر واحد) */
+        .powered-text { 
+            color: #f8bbd0; 
+            font-size: 1.8rem; 
+            font-weight: 300;
+        }
+        .powered-text span {
+            font-weight: 900;
+            background: linear-gradient(to right, #ff80ab, #ff4081);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 8px;
+        }
+
+        /* تنسيق مشاعر */
+        .logo-text {
+            font-size: 6rem;
+            font-weight: 900;
+            background: linear-gradient(180deg, #ffffff 20%, #f48fb1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 15px 30px rgba(244, 143, 177, 0.4));
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; } 100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="splashScreen">
+        <div id="step1" class="step">
+            <div class="loading-text">Loading</div>
+        </div>
+
+        <div id="step2" class="step">
+            <div class="powered-text"> by <span>Drakc apps</span></div>
+        </div>
+
+        <div id="step3" class="step">
+            <div class="logo-text">مَشاعِر</div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const splash = document.getElementById('splashScreen');
+            const steps = [
+                document.getElementById('step1'),
+                document.getElementById('step2'),
+                document.getElementById('step3')
+            ];
+
+            const runStep = (index, duration, callback) => {
+                steps[index].classList.add('active');
+                setTimeout(() => {
+                    steps[index].classList.remove('active');
+                    steps[index].classList.add('exit');
+                    setTimeout(callback, 700); 
+                }, duration);
+            };
+
+            // التسلسل الزمني
+            runStep(0, 1500, () => { // Loading لثانيتين
+                runStep(1, 2000, () => { // Powered by لثلاث ثواني
+                    runStep(2, 1500, () => { // مشاعر لثانيتين
+                        splash.style.opacity = '0';
+                        setTimeout(() => {
+                            splash.remove(); // حذف الإنترو نهائياً
+                        }, 1000);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+    <div id="toast"></div>
+
+    <main class="app-content">
+        
+        <section id="page-library" class="page active">
+            <h3 style="margin: 20px 0; text-align: center; font-family: 'Aref Ruqaa';">مَشاعر</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;" id="lib-grid"></div>
+        </section>
+
+        <section id="page-editor" class="page">
+            <div class="canvas-container">
+                <div id="artboard" class="tpl-dark-gold">
+                    <div class="tpl-layer glass-bg"></div>
+                    <div class="tpl-layer glass-item"></div>
+                    <div class="tpl-layer frame"></div>
+                    <div class="tpl-layer texture"></div>
+                    <div class="tpl-layer stars"></div>
+
+                    <div id="node-title" class="drag-item selected" style="top: 15%;">عنوان الدعوة</div>
+                    <div id="node-names" class="drag-item" style="top: 40%; font-size: 2.2rem; font-weight: 800;">أحمد & سارة</div>
+                    <div id="node-desc" class="drag-item" style="top: 65%;">نتشرف بدعوتكم لحضور حفلنا</div>
+                    <div id="node-date" class="drag-item" style="top: 85%; font-size: 0.8rem;">التاريخ: 2026/05/10</div>
+
+                    <div class="watermark" id="wm-label">صُمِم بواسطة مَشاعر </div>
+                </div>
+            </div>
+
+            <div class="scroll-hint"><i class="fa-solid fa-angles-up"></i> اسحب للأعلى لخيارات التخصيص الكاملة</div>
+
+            <div class="control-panel">
+                <span class="prop-title">تعديل المحتوى</span>
+                <textarea id="edit-text" class="input-field" rows="2" oninput="updateNode('innerText', this.value)"></textarea>
+                
+                <div class="btn-flex">
+                    <button class="btn-outline" onclick="updateNode('textAlign', 'right')"><i class="fa-solid fa-align-right"></i></button>
+                    <button class="btn-outline" onclick="updateNode('textAlign', 'center')"><i class="fa-solid fa-align-center"></i></button>
+                    <button class="btn-outline" onclick="updateNode('textAlign', 'left')"><i class="fa-solid fa-align-left"></i></button>
+                </div>
+
+                <span class="prop-title" style="margin-top: 20px;">الخطوط الاحترافية (فتح الخط: 50 نقطة)</span>
+                <div class="font-grid" id="font-market"></div>
+
+                <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
+                    <div style="flex: 1;">
+                        <span class="prop-title">حجم الخط</span>
+                        <input type="range" style="width: 100%; accent-color: var(--gold);" min="10" max="80" id="size-slider" oninput="updateNode('fontSize', this.value+'px')">
+                    </div>
+                    <input type="color" id="color-picker" style="width: 45px; height: 45px; border: none; background: none;" oninput="updateNode('color', this.value)">
+                </div>
+
+                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                    <label style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                        <span>إزالة العلامة المائية (-100 نقطة)</span>
+                        <input type="checkbox" id="check-wm" style="width: 20px; height: 20px;">
+                    </label>
+                </div>
+
+                <button class="btn-action btn-gold" onclick="exportImage()">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> حفظ التصميم (-10 نقاط)
+                </button>
+            </div>
+        </section>
+
+        <section id="page-points" class="page">
+            <div class="scroll-hint"><i class="fa-solid fa-angles-down"></i> اسحب للأعلى قليلا لتدوير العجلة </div>
+
+            <div class="points-tank-container">
+                <div class="tank">
+                    <div class="wave" id="wave-ui"></div>
+                    <div class="tank-val" id="pts-tank">50</div>
+                </div>
+                <p style="margin-top: 10px; color: var(--gold); font-weight: 800;">رصيدك الحالي</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <div style="width: 20px; height: 30px; background: #fff; margin: 0 auto; clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
+                <div id="wheel" class="wheel-box"></div>
+                <button id="spin-btn" class="btn-action btn-gold" style="max-width: 200px; margin: 20px auto;" onclick="spinWheel()">أدر واربح</button>
+                <p id="timer-ui" style="font-size: 0.8rem; color: var(--dim);"></p>
+            </div>
+        </section>
+
     </main>
 
-    <!-- القائمة السفلية (الجوال) -->
     <nav class="bottom-nav">
-  
-      <a href="https://example.com" target="_blank" class="nav-item" id="mobile-create">
-        <i class="fas fa-pen"></i>
-        <span>إنشاء</span>
-      </a>
-      <a href="#" class="nav-item" id="mobile-settings">
-        <i class="fas fa-cog"></i>
-        <span>إعدادات</span>
-      </a>
+        <div class="nav-item active" onclick="nav('page-library', this)"><i class="fa-solid fa-images"></i><span>المكتبة</span></div>
+        <div class="nav-item" onclick="nav('page-editor', this)"><i class="fa-solid fa-wand-magic-sparkles"></i><span>المحرر</span></div>
+        <div class="nav-item" onclick="nav('page-points', this)"><i class="fa-solid fa-coins"></i><span>النقاط</span></div>
     </nav>
-  </div>
 
-  <!-- ===== النوافذ المنبثقة (مودالات) ===== -->
-  <!-- مودال الإعدادات الرئيسي (الخيارات) -->
-  <div id="settings-modal" class="modal-overlay">
-    <div class="modal-card">
-      <button class="modal-close" id="close-settings">&times;</button>
-      <div class="modal-title">الإعدادات</div>
-      <button class="modal-option" id="privacy-option"><i class="fas fa-lock"></i> سياسة الخصوصية</button>
-      <button class="modal-option" id="terms-option"><i class="fas fa-file-contract"></i> شروط الأحكام</button>
-      <button class="modal-option" id="download-option"><i class="fas fa-download"></i> تحميل التطبيق</button>
-    </div>
-  </div>
+    <script>
+        let data = { points: 50, lastSpin: 0, unlockedFonts: [], activeNodeId: 'node-title' };
 
-  <!-- مودال سياسة الخصوصية -->
-  <div id="privacy-modal" class="modal-overlay">
-    <div class="modal-card">
-      <button class="modal-close" id="close-privacy">&times;</button>
-      <div class="modal-title">سياسة الخصوصية</div>
-      <div class="modal-text-content">
-        <p>نحن في "مشاعر" نهتم بخصوصية بياناتك. جميع مشاعرك وكلماتك آمنة ومشفرة. لا يتم مشاركة أي محتوى مع أطراف ثالثة. يمكنك طلب حذف بياناتك في أي وقت.</p>
-        <p>نستخدم المعلومات فقط لتحسين تجربتك العاطفية داخل التطبيق.</p>
-      </div>
-    </div>
-  </div>
+        const config = {
+            fonts: [
+                { id: 'Tajawal', label: 'تجوال (مجاني)', premium: false },
+                { id: 'Cairo', label: 'القاهرة', premium: false },
+                { id: 'Aref Ruqaa', label: 'رقعة فخم', premium: true },
+                { id: 'Lalezar', label: 'لاله زار', premium: true },
+                { id: 'Amiri', label: 'أميري ملكي', premium: true },
+                { id: 'Mada', label: 'مدا عصري', premium: true }
+            ],
+            templates: [
+                { id: 'tpl-dark-gold', name: 'أونيكس ذهبي', class: 'tpl-dark-gold' },
+                { id: 'tpl-glass', name: 'زجاجي مودرن', class: 'tpl-glass' },
+                { id: 'tpl-marble', name: 'رخام أبيض', class: 'tpl-marble' },
+ { id: 'tpl-night', name: 'سماء مرصعة <i class="fa-solid fa-crown top-icon"></i>', class: 'tpl-night' },
+                { id: 'tpl-minimal', name: 'بساطة وردية', class: 'tpl-minimal' },
+ { id: 'tpl-royal-red', name: 'أحمر ملكي <i class="fa-solid fa-crown top-icon"></i>', class: 'tpl-royal-red' },
+                { id: 'tpl-neon', name: 'نيون أزرق', class: 'tpl-neon' },
+  { id: 'tpl-vintage', name: 'ورق كلاسيك <i class="fa-solid fa-crown top-icon"></i>', class: 'tpl-vintage' },
+ { id: 'tpl-nature', name: 'طبيعة خضراء <i class="fa-solid fa-leaf top-icon"></i>', class: 'tpl-nature' },
+                { id: 'tpl-sunset', name: 'غروب ساحر', class: 'tpl-sunset' }
+            ]
+        };
 
-  <!-- مودال شروط الأحكام -->
-  <div id="terms-modal" class="modal-overlay">
-    <div class="modal-card">
-      <button class="modal-close" id="close-terms">&times;</button>
-      <div class="modal-title">شروط الأحكام</div>
-      <div class="modal-text-content">
-        <p>باستخدامك لهذه المساحة، أنت توافق على أن تكون صادقاً مع نفسك ومع الآخرين. يمنع نشر خطاب الكراهية أو العنف. نحن نؤمن بأن المشاعر تلامس القلوب بلطف.</p>
-        <p>جميع الحقوق محفوظة لفريق "مشاعر" 🌹</p>
-      </div>
-    </div>
-  </div>
+        window.onload = () => {
+            const saved = localStorage.getItem('mashaer_master_v1');
+            if(saved) data = JSON.parse(saved);
+            refreshUI();
+            buildLibrary();
+            buildFonts();
+            initDrag();
+            checkSpin();
+        };
 
-  <!-- مودال تحميل التطبيق -->
-  <div id="download-modal" class="modal-overlay">
-    <div class="modal-card">
-      <button class="modal-close" id="close-download">&times;</button>
-      <div class="modal-title">نزّل التطبيق</div>
-      <div class="modal-text-content" style="text-align: center;">
-        <i class="fas fa-heart" style="font-size: 4rem; color: #b27a7a; margin-bottom: 1rem;"></i>
-        <p>يمكنك تحميل تطبيق "مشاعر" للهواتف والاستمتاع بتجربة أكثر خصوصية.</p>
-        <a href="#" class="download-link"><i class="fas fa-mobile-alt"></i> حمل للآيفون</a>
-        <a href="#" class="download-link" style="background: #8f5e5e; margin-right: 0.5rem;"><i class="fab fa-android"></i> حمل للأندرويد</a>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    (function() {
-      // جلب العناصر
-      const settingsModal = document.getElementById('settings-modal');
-      const privacyModal = document.getElementById('privacy-modal');
-      const termsModal = document.getElementById('terms-modal');
-      const downloadModal = document.getElementById('download-modal');
-
-      // أزرار فتح الإعدادات (من القائمة العلوية والسفلية)
-      const mobileSettings = document.getElementById('mobile-settings');
-      const desktopSettings = document.getElementById('desktop-settings');
-
-      // أزرار الإغلاق
-      const closeSettings = document.getElementById('close-settings');
-      const closePrivacy = document.getElementById('close-privacy');
-      const closeTerms = document.getElementById('close-terms');
-      const closeDownload = document.getElementById('close-download');
-
-      // خيارات داخل مودال الإعدادات
-      const privacyOption = document.getElementById('privacy-option');
-      const termsOption = document.getElementById('terms-option');
-      const downloadOption = document.getElementById('download-option');
-
-      // فتح مودال الإعدادات
-      function openSettingsModal(e) {
-        e.preventDefault();
-        settingsModal.style.display = 'flex';
-      }
-      mobileSettings.addEventListener('click', openSettingsModal);
-      desktopSettings.addEventListener('click', openSettingsModal);
-
-      // إغلاق مودال الإعدادات
-      closeSettings.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
-      });
-
-      // فتح مودال الخصوصية من الخيار
-      privacyOption.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
-        privacyModal.style.display = 'flex';
-      });
-
-      // فتح مودال الشروط
-      termsOption.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
-        termsModal.style.display = 'flex';
-      });
-
-      // فتح مودال التحميل
-      downloadOption.addEventListener('click', () => {
-        settingsModal.style.display = 'none';
-        downloadModal.style.display = 'flex';
-      });
-
-      // إغلاق المودالات
-      closePrivacy.addEventListener('click', () => {
-        privacyModal.style.display = 'none';
-      });
-      closeTerms.addEventListener('click', () => {
-        termsModal.style.display = 'none';
-      });
-      closeDownload.addEventListener('click', () => {
-        downloadModal.style.display = 'none';
-      });
-
-      // إغلاق عند النقر على الخلفية (اختياري)
-      window.addEventListener('click', (e) => {
-        if (e.target.classList.contains('modal-overlay')) {
-          e.target.style.display = 'none';
+        function save() {
+            localStorage.setItem('mashaer_master_v1', JSON.stringify(data));
+            refreshUI();
         }
-      });
 
-      // منع التمرير خلف المودال (اختياري)
-      const modals = [settingsModal, privacyModal, termsModal, downloadModal];
-      modals.forEach(modal => {
-        modal.addEventListener('wheel', (e) => e.stopPropagation(), { passive: false });
-      });
+        function refreshUI() {
+            document.getElementById('pts-tank').innerText = data.points;
+            document.getElementById('wave-ui').style.height = Math.min(data.points / 5, 100) + '%';
+        }
 
-      // تنشيط العنصر النشط في القائمة السفلية (الرئيسية)
-      const mobileHome = document.getElementById('mobile-home');
-      const desktopHome = document.querySelector('.desktop-home');
-      [mobileHome, desktopHome].forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault();
-          // إزالة active من جميع عناصر القائمة السفلية
-          document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-          mobileHome.classList.add('active');
-          // يمكن تمرير الصفحة للأعلى
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      });
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg; t.style.display = 'block';
+            setTimeout(() => t.style.display = 'none', 3000);
+        }
 
-      // روابط "إنشاء" تفتح موقع ويب (افتراضي)
-      // (موجودة بالفعل target _blank)
-    })();
-  </script>
+        function nav(pageId, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function buildLibrary() {
+            const grid = document.getElementById('lib-grid');
+            grid.innerHTML = '';
+            config.templates.forEach(t => {
+                const item = document.createElement('div');
+                item.className = 'font-card';
+                item.style.height = '80px';
+                item.style.display = 'flex';
+                item.style.alignItems = 'center';
+                item.style.justifyContent = 'center';
+                item.innerHTML = t.name;
+                item.onclick = () => {
+                    document.getElementById('artboard').className = t.class;
+                    nav('page-editor', document.querySelectorAll('.nav-item')[1]);
+                };
+                grid.appendChild(item);
+            });
+        }
+
+        function buildFonts() {
+            const market = document.getElementById('font-market');
+            market.innerHTML = '';
+            config.fonts.forEach(f => {
+                const unlocked = !f.premium || data.unlockedFonts.includes(f.id);
+                const card = document.createElement('div');
+                card.className = `font-card ${f.premium ? 'premium' : ''} ${unlocked ? 'unlocked' : ''}`;
+                card.style.fontFamily = f.id;
+                card.innerText = f.label;
+                card.onclick = () => {
+                    if(unlocked) {
+                        updateNode('fontFamily', f.id);
+                        document.querySelectorAll('.font-card').forEach(c => c.classList.remove('active'));
+                        card.classList.add('active');
+                    } else {
+                        if(confirm(`فتح هذا الخط مقابل 50 نقطة؟`)) {
+                            if(data.points >= 50) {
+                                data.points -= 50;
+                                data.unlockedFonts.push(f.id);
+                                save();
+                                buildFonts();
+                                showToast("تم فتح الخط!");
+                            } else { showToast("نقاطك غير كافية!"); }
+                        }
+                    }
+                };
+                market.appendChild(card);
+            });
+        }
+
+        function initDrag() {
+            const items = document.querySelectorAll('.drag-item');
+            items.forEach(item => {
+                let startX, startY;
+                const start = (e) => {
+                    selectItem(item.id);
+                    const touch = e.type.includes('touch') ? e.touches[0] : e;
+                    startX = touch.clientX - item.offsetLeft;
+                    startY = touch.clientY - item.offsetTop;
+                    item.isDragging = true;
+                };
+                const move = (e) => {
+                    if(!item.isDragging) return;
+                    const touch = e.type.includes('touch') ? e.touches[0] : e;
+                    item.style.left = (touch.clientX - startX) + 'px';
+                    item.style.top = (touch.clientY - startY) + 'px';
+                };
+                const end = () => { item.isDragging = false; };
+                item.addEventListener('mousedown', start);
+                item.addEventListener('touchstart', start);
+                window.addEventListener('mousemove', move);
+                window.addEventListener('touchmove', move);
+                window.addEventListener('mouseup', end);
+                window.addEventListener('touchend', end);
+            });
+        }
+
+        function selectItem(id) {
+            data.activeNodeId = id;
+            document.querySelectorAll('.drag-item').forEach(i => i.classList.remove('selected'));
+            const el = document.getElementById(id);
+            el.classList.add('selected');
+            document.getElementById('edit-text').value = el.innerText;
+            document.getElementById('size-slider').value = parseInt(window.getComputedStyle(el).fontSize);
+            document.getElementById('color-picker').value = rgbToHex(window.getComputedStyle(el).color);
+        }
+
+        function updateNode(prop, val) {
+            const el = document.getElementById(data.activeNodeId);
+            el.style[prop] = val;
+            if(prop === 'innerText') el.innerText = val;
+        }
+
+        function rgbToHex(rgb) {
+            if(!rgb || rgb.startsWith('#')) return rgb;
+            const res = rgb.match(/\d+/g);
+            return "#" + ((1 << 24) + (+res[0] << 16) + (+res[1] << 8) + +res[2]).toString(16).slice(1);
+        }
+
+        function checkSpin() {
+            const rem = (15*60*60*1000) - (Date.now() - data.lastSpin);
+            if(rem > 0) {
+                document.getElementById('spin-btn').disabled = true;
+                const h = Math.floor(rem/3600000);
+                const m = Math.floor((rem%3600000)/60000);
+                document.getElementById('timer-ui').innerText = `المحاولة القادمة بعد ${h}س و ${m}د`;
+            } else {
+                document.getElementById('spin-btn').disabled = false;
+                document.getElementById('timer-ui').innerText = "العجلة جاهزة!";
+            }
+        }
+
+        function spinWheel() {
+            const wheel = document.getElementById('wheel');
+            const deg = 3600 + Math.floor(Math.random() * 360);
+            wheel.style.transform = `rotate(${deg}deg)`;
+            document.getElementById('spin-btn').disabled = true;
+            setTimeout(() => {
+                const won = Math.floor(Math.random() * 41) + 10;
+                data.points += won;
+                data.lastSpin = Date.now();
+                save();
+                showToast(`ربحت ${won} نقطة!`);
+                checkSpin();
+            }, 6000);
+        }
+
+        function exportImage() {
+            const delWm = document.getElementById('check-wm').checked;
+            const total = 10 + (delWm ? 100 : 0);
+            if(data.points < total) {
+                showToast(`تحتاج ${total} نقطة! رصيدك: ${data.points}`);
+                return;
+            }
+            if(!confirm(`سيتم خصم ${total} نقطة للتصدير. استمرار؟`)) return;
+            const wm = document.getElementById('wm-label');
+            if(delWm) wm.style.display = 'none';
+            html2canvas(document.getElementById('artboard'), { scale: 3 }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Mashaer_${Date.now()}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+                data.points -= total;
+                save();
+                showToast("تم الحفظ والخصم!");
+                wm.style.display = 'block';
+            });
+        }
+    </script>
 </body>
 </html>
