@@ -2,637 +2,1533 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>مشاعر</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#050505">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Mashaer & مشاعر</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;800&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;900&family=Amiri:ital,wght@0,400;0,700;1,400&family=Almarai:wght@300;700&family=Reem+Kufi:wght@400;700&family=Lalezar&family=Changa:wght@400;800&family=El+Messiri:wght@400;700&family=Mada:wght@400;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <style>
-    /* تنسيق القوالب العادية - جعلها داكنة وبسيطة */
-.font-card { 
-    background: #121216 !important; /* إجبار اللون الداكن */
-    color: #94949b !important; /* نص رمادي باهت */
-    border: 1px solid #1f1f25 !important; 
-    padding: 12px; 
-    border-radius: 10px; 
-    text-align: center; 
-    font-size: 0.8rem;
-    cursor: pointer; 
-    position: relative;
-    transition: all 0.3s ease;
+    #nav-notif-dot {
+    display: none !important;
 }
+    .offline .insight-icon-wrapper { display: none; }
+    .offline .insight-row { gap: 0; padding: 16px; }
+    .offline .nav-item-icon, .offline .input-icon, .offline i.ph { display: none; }
+    .offline .nav-item { justify-content: center; gap: 0; }
+    .offline .input-label { justify-content: flex-start; gap: 0; }
+    
+    @media (min-width: 768px) {
+        .bottom-nav-wrapper { bottom: auto; top: 20px; width: 100%; max-width: 900px; }
+        .bottom-nav { border-radius: 20px; justify-content: space-around; padding: 10px 20px; }
+        .nav-item { flex-direction: row; gap: 8px; padding: 10px 16px; }
+        .nav-item-icon { font-size: 1.3rem; }
+        .nav-item-label { font-size: 0.85rem; }
+        #app-container { padding-top: 100px !important; }
+    }
 
-/* تنسيق القوالب المميزة (الأكثر استخداماً) */
-.font-card:has(.top-icon) {
-    background: linear-gradient(145deg, #1a1a24, #0d0d12) !important;
-    border: 1px solid rgba(0, 242, 255, 0.5) !important; /* إطار نيوني سماوي */
-    color: #ffffff !important; /* نص أبيض ناصع */
-    transform: translateY(-5px); /* رفع القالب للأعلى */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.6), 0 0 15px rgba(0, 242, 255, 0.2);
-    z-index: 2;
-}
+    @media (min-width: 1024px) {
+        .bottom-nav-wrapper { max-width: 1000px; top: 24px; }
+        .bottom-nav { justify-content: center; gap: 40px; }
+        .nav-item { padding: 12px 20px; }
+    }
+    
+    #view-create > header { display: none; }
+    #view-settings > header { display: none; }
+    #btn-export-data { display: none; }
 
-/* أيقونة التميز */
-.top-icon {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    color: #00f2ff;
-    font-size: 0.9rem;
-    filter: drop-shadow(0 0 5px #00f2ff);
-}
-
-    /* أيقونة التميز: لون نيوني جذاب */
-.top-icon {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    color: #00f2ff; /* لون سماوي مضيء */
-    font-size: 0.8rem;
-    filter: drop-shadow(0 0 5px #00f2ff);
-}
-
-/* تنسيق الكارت: إطار مضيء خفيف */
-.font-card:has(.top-icon) {
-    border: 1px solid #00f2ff33 !important; /* إطار شفاف خفيف */
-    background: linear-gradient(145deg, #16161d, #0d0d12) !important;
-    position: relative;
-}
-
-/* إضافة كلمة "رائج" أو "مميز" بشكل خفي وأنيق */
-.font-card:has(.top-icon)::after {
-    content: 'الأكثر استخداماً';
-    position: absolute;
-    bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.5rem;
-    color: #00f2ff;
-    opacity: 0.7;
-    letter-spacing: 1px;
-}
-
-/* حركة تدرج لوني هادئة للإطار */
-.font-card:has(.top-icon) {
-    animation: border-glow 4s infinite alternate;
-}
-
-@keyframes border-glow {
-    from { border-color: #00f2ff33; box-shadow: 0 0 5px #00f2ff11; }
-    to { border-color: #7000ff33; box-shadow: 0 0 15px #7000ff22; }
-}
-
-        :root {
-            --onyx: #08080a;
-            --card: #121216;
-            --border: #1f1f25;
-            --gold: #d4af37;
-            --pink: #ff4d6d;
-            --text: #ffffff;
-            --dim: #94949b;
-            --premium: linear-gradient(135deg, #d4af37, #f4e1a1);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background-color: var(--onyx);
-            color: var(--text);
-            overflow: hidden; width: 100vw; height: 100vh;
-            display: flex; flex-direction: column;
-        }
-
-        /* تم إخفاء الهيدر تماماً */
-        .main-header { display: none; }
-
-        .app-content { flex: 1; overflow-y: auto; position: relative; padding-bottom: 100px; }
-        .page { display: none; padding: 20px; animation: fadeIn 0.4s ease; }
-        .page.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* إشعارات التوجيه */
-        .scroll-hint {
-            text-align: center; color: var(--gold); font-size: 0.8rem;
-            margin: 10px 0; opacity: 0.8; font-weight: 500;
-        }
-
-        .canvas-container {
-            width: 100%; display: flex; justify-content: center; padding: 20px 0;
-        }
-        #artboard {
-            width: 320px; height: 480px; background: #fff;
-            position: relative; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-        }
-
-        /* القوالب */
-        .tpl-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; display: none; }
-        .tpl-glass .glass-bg { display: block; background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
-        .tpl-glass .glass-item { display: block; position: absolute; inset: 20px; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; }
-        .tpl-dark-gold { background: #000 !important; color: var(--gold); }
-        .tpl-dark-gold .frame { display: block; position: absolute; inset: 15px; border: 2px solid var(--gold); }
-        .tpl-marble { background: #f5f5f5 !important; color: #333; }
-        .tpl-marble .texture { display: block; background: url('https://www.transparenttextures.com/patterns/marble-white.png'); opacity: 0.5; }
-        .tpl-night { background: #0a192f !important; color: #fff; }
-        .tpl-night .stars { display: block; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px; opacity: 0.2; }
-        .tpl-minimal { background: #fff !important; color: #ff4d6d; }
-        .tpl-royal-red { background: #4a0404 !important; color: #d4af37; }
-        .tpl-neon { background: #050505 !important; color: #00f2ff; text-shadow: 0 0 10px #00f2ff; }
-        .tpl-vintage { background: #f4ecd8 !important; color: #5d4037; }
-        .tpl-nature { background: #f1f8e9 !important; color: #2e7d32; }
-        .tpl-sunset { background: linear-gradient(to bottom, #ff512f, #dd2476) !important; color: #fff; }
-
-        .drag-item {
-            position: absolute; z-index: 10; width: 80%; left: 10%;
-            cursor: move; padding: 5px; text-align: center;
-            user-select: none; touch-action: none;
-        }
-        .drag-item.selected { outline: 1px dashed var(--gold); background: rgba(212, 175, 55, 0.1); }
-        .watermark { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 0.6rem; opacity: 0.4; letter-spacing: 2px; }
-
-        .control-panel { background: var(--card); border-radius: 20px; padding: 20px; border: 1px solid var(--border); margin-top: 20px; }
-        .prop-title { color: var(--gold); font-size: 0.8rem; font-weight: 800; margin-bottom: 15px; display: block; }
-        .input-field { width: 100%; background: var(--onyx); border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: #fff; margin-bottom: 15px; }
-
-        .font-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .font-card { 
-            background: var(--onyx); padding: 12px; border-radius: 10px; text-align: center; font-size: 0.8rem;
-            border: 1px solid transparent; cursor: pointer; position: relative;
-        }
-        .font-card.premium::after { content: '\f023'; font-family: 'Font Awesome 6 Free'; font-weight: 900; position: absolute; top: 5px; right: 5px; color: var(--gold); font-size: 0.6rem; }
-        .font-card.unlocked::after { content: '\f09c'; color: #4caf50; }
-        .font-card.active { border-color: var(--gold); }
-
-        .btn-flex { display: flex; gap: 10px; margin-top: 15px; }
-        .btn-action { flex: 1; padding: 15px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
-        .btn-gold { background: var(--premium); color: #000; }
-        .btn-outline { background: transparent; border: 1px solid var(--border); color: #fff; }
-
-        .tank {
-            width: 180px; height: 180px; border-radius: 50%; border: 6px solid var(--border);
-            margin: 0 auto; position: relative; overflow: hidden; background: #000;
-        }
-        .wave {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 50%;
-            background: linear-gradient(to top, var(--pink), var(--gold));
-            transition: height 1s ease-in-out;
-        }
-        .wave::before {
-            content: ""; position: absolute; width: 200%; height: 200%;
-            top: 0; left: 50%; transform: translate(-50%, -75%);
-            background: #000; border-radius: 40%; animation: rotateWave 8s linear infinite;
-        }
-        @keyframes rotateWave { from { transform: translate(-50%, -75%) rotate(0deg); } to { transform: translate(-50%, -75%) rotate(360deg); } }
-        .tank-val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 900; z-index: 10; text-shadow: 0 5px 10px rgba(0,0,0,0.5); }
-
-        .wheel-box { width: 260px; height: 260px; border-radius: 50%; border: 8px solid var(--border); margin: 30px auto; position: relative; transition: transform 6s cubic-bezier(0.1, 0, 0, 1); background: conic-gradient(#ff4d6d, #1a1a20, #d4af37, #1a1a20, #ff4d6d, #1a1a20); }
-
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 80px;
-            background: var(--card); border-top: 1px solid var(--border);
-            display: flex; justify-content: space-around; align-items: center; z-index: 2000;
-        }
-        .nav-item { color: var(--dim); display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
-        .nav-item.active { color: var(--gold); }
-
-        #toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: #fff; color: #000; padding: 10px 25px; border-radius: 30px; font-weight: 800; z-index: 9999; display: none; }
-    </style>
-</head>
-<body>
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مشاعر - Intro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+    :root {
+        --bg-base: #030303;
+        --bg-elevated: rgba(18, 18, 18, 0.65);
+        --bg-elevated-hover: rgba(28, 28, 28, 0.8);
+        --border-subtle: rgba(255, 255, 255, 0.06);
+        --border-highlight: rgba(255, 255, 255, 0.12);
+        --border-focus: rgba(139, 92, 246, 0.5);
+        --text-primary: #ffffff;
+        --text-secondary: #9ca3af;
+        --text-tertiary: #6b7280;
+        --text-inverse: #000000;
+        --accent-primary: #8b5cf6;
+        --accent-secondary: #3b82f6;
+        --accent-tertiary: #ec4899;
+        --accent-glow: rgba(139, 92, 246, 0.4);
+        --danger-base: #ef4444;
+        --danger-bg: rgba(239, 68, 68, 0.1);
+        --success-base: #10b981;
+        --success-bg: rgba(16, 185, 129, 0.1);
+        --nav-bg: rgba(10, 10, 10, 0.85);
+        --nav-active-bg: rgba(255, 255, 255, 0.1);
         
-        body, html { 
-            width: 100%; height: 100%; 
-            background-color: #0f0a0e; 
-            overflow: hidden; 
-        }
+        --font-ar: 'Tajawal', sans-serif;
+        --font-en: 'Outfit', sans-serif;
+        --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        
+        --space-2: 0.125rem; --space-4: 0.25rem; --space-8: 0.5rem; --space-12: 0.75rem;
+        --space-16: 1rem; --space-24: 1.5rem; --space-32: 2rem; --space-48: 3rem; --space-64: 4rem;
+        
+        --radius-sm: 8px; --radius-md: 16px; --radius-lg: 24px; --radius-xl: 32px; --radius-full: 9999px;
+        
+        --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        --ease-in-out-circ: cubic-bezier(0.85, 0, 0.15, 1);
+        --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+        
+        --trans-fast: 200ms var(--ease-out-expo);
+        --trans-base: 400ms var(--ease-out-expo);
+        --trans-slow: 600ms var(--ease-out-expo);
+        
+        --z-canvas: -10; --z-base: 1; --z-elevated: 10; --z-nav: 100; --z-dropdown: 200;
+        --z-modal: 1000; --z-toast: 2000; --z-splash: 9999;
+    }
 
-        #splashScreen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #0f0a0e;
-            z-index: 999999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 1s ease;
-        }
+    [data-theme="light"] {
+        --bg-base: #f4f4f5;
+        --bg-elevated: rgba(255, 255, 255, 0.75);
+        --bg-elevated-hover: rgba(255, 255, 255, 0.95);
+        --border-subtle: rgba(0, 0, 0, 0.06);
+        --border-highlight: rgba(0, 0, 0, 0.12);
+        --border-focus: rgba(124, 58, 237, 0.5);
+        --text-primary: #111827;
+        --text-secondary: #4b5563;
+        --text-tertiary: #9ca3af;
+        --text-inverse: #ffffff;
+        --accent-primary: #7c3aed;
+        --accent-secondary: #2563eb;
+        --accent-tertiary: #db2777;
+        --accent-glow: rgba(124, 58, 237, 0.3);
+        --nav-bg: rgba(255, 255, 255, 0.85);
+        --nav-active-bg: rgba(0, 0, 0, 0.05);
+    }
 
-        .step {
-            position: absolute;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(20px);
-            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            white-space: nowrap; /* لضمان بقاء النص في سطر واحد */
-            width: 100%;
-        }
+    [dir="rtl"] { font-family: var(--font-ar); }
+    [dir="ltr"] { font-family: var(--font-en); }
 
-        .step.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { background-color: var(--bg-base); color: var(--text-primary); line-height: 1.5; min-height: 100vh; overflow-x: hidden; transition: background-color var(--trans-slow), color var(--trans-slow); display: flex; justify-content: center; }
 
-        .step.exit {
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-20px);
-        }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border-highlight); border-radius: var(--radius-full); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-tertiary); }
 
-        /* تنسيق Loading */
-        .loading-text {
-            font-size: 1.4rem;
-            color: #fce4ec;
-            letter-spacing: 2px;
-            animation: pulse 1.5s infinite alternate;
-        }
+    #ambient-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: var(--z-canvas); pointer-events: none; opacity: 0.8; transition: opacity var(--trans-slow); }
+    .bg-mesh-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.08) 0%, transparent 70%), radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 70%); z-index: calc(var(--z-canvas) + 1); pointer-events: none; }
 
-        /* تنسيق Powered by Drake (سطر واحد) */
-        .powered-text { 
-            color: #f8bbd0; 
-            font-size: 1.8rem; 
-            font-weight: 300;
-        }
-        .powered-text span {
-            font-weight: 900;
-            background: linear-gradient(to right, #ff80ab, #ff4081);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-right: 8px;
-        }
+    #app-container { width: 100%; max-width: 600px; min-height: 100vh; padding: var(--space-32) var(--space-24) 140px var(--space-24); position: relative; z-index: var(--z-base); display: flex; flex-direction: column; }
+    .view-section { display: none; opacity: 0; width: 100%; transform: translateY(20px) scale(0.98); animation: viewEnter 0.6s var(--ease-out-expo) forwards; }
+    .view-section.is-active { display: flex; flex-direction: column; }
+    @keyframes viewEnter { 0% { opacity: 0; transform: translateY(20px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
 
-        /* تنسيق مشاعر */
-        .logo-text {
-            font-size: 6rem;
-            font-weight: 900;
-            background: linear-gradient(180deg, #ffffff 20%, #f48fb1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 15px 30px rgba(244, 143, 177, 0.4));
-        }
+    .h1 { font-size: clamp(2rem, 5vw, 2.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+    .h2 { font-size: clamp(1.5rem, 4vw, 1.8rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+    .h3 { font-size: 1.25rem; font-weight: 600; }
+    .text-gradient { background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block; }
+    .text-subtle { color: var(--text-secondary); font-size: 0.95rem; font-weight: 400; }
+    .text-micro { color: var(--text-tertiary); font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .text-center { text-align: center; }
+    .mb-8 { margin-bottom: var(--space-8); } .mb-16 { margin-bottom: var(--space-16); } .mb-24 { margin-bottom: var(--space-24); } .mb-32 { margin-bottom: var(--space-32); } .mb-48 { margin-bottom: var(--space-48); }
 
-        @keyframes pulse {
-            0% { opacity: 0.3; } 100% { opacity: 1; }
-        }
+    .glass-panel { background: var(--bg-elevated); backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); box-shadow: 0 4px 24px -8px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: var(--trans-base); overflow: hidden; position: relative; }
+    [data-theme="light"] .glass-panel { box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.4); }
+    .glass-panel:hover { border-color: var(--border-highlight); }
+    .panel-padding { padding: var(--space-24); }
+
+    .input-wrapper { display: flex; flex-direction: column; gap: var(--space-8); margin-bottom: var(--space-24); position: relative; }
+    .input-label { font-size: 0.875rem; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: var(--space-8); transition: var(--trans-fast); }
+    .input-icon { color: var(--accent-primary); font-size: 1.1rem; }
+    .premium-input { width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); color: var(--text-primary); font-family: inherit; font-size: 1rem; font-weight: 500; transition: var(--trans-base); outline: none; appearance: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02); }
+    [data-theme="light"] .premium-input { background: rgba(0, 0, 0, 0.02); }
+    .premium-input::placeholder { color: var(--text-tertiary); opacity: 0.6; }
+    .premium-input:focus { background: rgba(255, 255, 255, 0.04); border-color: var(--accent-primary); box-shadow: 0 0 0 4px var(--accent-glow), inset 0 2px 4px rgba(0,0,0,0.02); }
+    .premium-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.8) sepia(1) hue-rotate(200deg) saturate(500%); cursor: pointer; opacity: 0.7; transition: var(--trans-fast); }
+    .premium-input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+    [data-theme="light"] .premium-input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.2); }
+    select.premium-input { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%238b5cf6'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 20px center; background-size: 20px; padding-left: 50px; }
+    [dir="ltr"] select.premium-input { background-position: right 20px center; padding-left: 20px; padding-right: 50px; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-12); padding: 18px 24px; border-radius: var(--radius-md); border: none; font-family: inherit; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: var(--trans-bounce); outline: none; width: 100%; position: relative; overflow: hidden; }
+    .btn::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transform: skewX(-20deg); transition: 0s; }
+    .btn:hover::after { left: 200%; transition: 0.6s ease-in-out; }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: #ffffff; box-shadow: 0 8px 20px -6px var(--accent-glow); }
+    .btn-primary:hover { box-shadow: 0 12px 28px -6px rgba(139, 92, 246, 0.6); transform: translateY(-2px); }
+    .btn-danger-ghost { background: transparent; color: var(--danger-base); border: 1px solid var(--danger-bg); padding: 12px 16px; font-size: 0.9rem; }
+    .btn-danger-ghost:hover { background: var(--danger-bg); }
+
+    .bottom-nav-wrapper { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); width: calc(100% - 48px); max-width: 500px; z-index: var(--z-nav); }
+    .bottom-nav { display: flex; justify-content: space-between; align-items: center; background: var(--nav-bg); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid var(--border-subtle); border-radius: var(--radius-full); padding: 8px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+    [data-theme="light"] .bottom-nav { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); }
+    .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 0; gap: 4px; color: var(--text-tertiary); border-radius: var(--radius-full); cursor: pointer; transition: var(--trans-smooth); position: relative; }
+    .nav-item-icon { font-size: 1.5rem; transition: var(--trans-bounce); }
+    .nav-item-label { font-size: 0.7rem; font-weight: 600; transition: var(--trans-fast); }
+    .nav-item.is-active { color: var(--text-primary); background: var(--nav-active-bg); }
+    .nav-item.is-active .nav-item-icon { color: var(--accent-primary); transform: translateY(-2px) scale(1.1); }
+    .nav-item.is-active .nav-item-label { color: var(--accent-primary); }
+
+    .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-48) var(--space-24); text-align: center; opacity: 0.6; }
+    .empty-state-icon { font-size: 4rem; margin-bottom: var(--space-16); color: var(--text-tertiary); animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+
+    .soul-card { margin-bottom: var(--space-16); }
+    .soul-card-header { padding: 20px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; background: transparent; transition: background var(--trans-fast); }
+    .soul-card-header:active { background: rgba(255,255,255,0.02); }
+    .soul-identity { display: flex; align-items: center; gap: 16px; }
+    .soul-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--bg-base), var(--bg-elevated)); border: 1px solid var(--border-highlight); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; font-weight: 800; color: var(--accent-primary); box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); position: relative; }
+    .soul-avatar::after { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-primary), transparent); z-index: -1; opacity: 0.5; }
+    .soul-name { font-size: 1.15rem; font-weight: 700; margin-bottom: 2px; }
+    .soul-mood-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: var(--radius-sm); background: rgba(139, 92, 246, 0.15); color: var(--accent-primary); }
+    .soul-expand-icon { font-size: 1.25rem; color: var(--text-tertiary); transition: transform 0.5s var(--ease-bounce); }
+    .soul-card.is-open .soul-expand-icon { transform: rotate(180deg); color: var(--text-primary); }
+    .soul-card-body-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s var(--ease-bounce); }
+    .soul-card.is-open .soul-card-body-wrapper { grid-template-rows: 1fr; }
+    .soul-card-body { overflow: hidden; }
+    .soul-card-content { padding: 0 20px 24px 20px; display: flex; flex-direction: column; gap: 24px; }
+    .soul-divider { height: 1px; background: var(--border-subtle); width: 100%; margin-top: 4px; }
+
+    .live-timer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .timer-box { background: rgba(0,0,0,0.2); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 8px; text-align: center; display: flex; flex-direction: column; gap: 4px; position: relative; overflow: hidden; }
+    [data-theme="light"] .timer-box { background: rgba(255,255,255,0.5); }
+    .timer-val { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-mono); letter-spacing: -1px; font-variant-numeric: tabular-nums; }
+    .timer-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.05em; }
+
+    .insights-list { display: flex; flex-direction: column; gap: 12px; }
+    .insight-row { display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: var(--radius-md); border: 1px solid transparent; transition: var(--trans-fast); }
+    .insight-row:hover { background: rgba(255,255,255,0.04); border-color: var(--border-subtle); }
+    .insight-icon-wrapper { width: 36px; height: 36px; border-radius: var(--radius-sm); background: rgba(139, 92, 246, 0.1); color: var(--accent-primary); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; flex-shrink: 0; }
+    .insight-text { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; }
+    .insight-highlight { color: var(--text-primary); font-weight: 700; font-family: var(--font-mono); font-size: 1rem; }
+
+    .settings-group { margin-bottom: var(--space-24); }
+    .settings-label-main { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-tertiary); margin-bottom: var(--space-12); margin-inline-start: var(--space-8); }
+    .setting-item { display: flex; justify-content: space-between; align-items: center; padding: 20px; border-bottom: 1px solid var(--border-subtle); }
+    .setting-item:last-child { border-bottom: none; }
+    .setting-info { display: flex; flex-direction: column; gap: 4px; }
+    .setting-title { font-size: 1rem; font-weight: 600; }
+    .setting-desc { font-size: 0.75rem; color: var(--text-tertiary); }
+
+    .toggle-switch { width: 52px; height: 28px; background: rgba(255,255,255,0.1); border-radius: var(--radius-full); position: relative; cursor: pointer; transition: background var(--trans-base); border: 1px solid var(--border-subtle); flex-shrink: 0; }
+    [data-theme="light"] .toggle-switch { background: rgba(0,0,0,0.1); }
+    .toggle-knob { width: 20px; height: 20px; background: #ffffff; border-radius: 50%; position: absolute; top: 3px; left: 4px; transition: transform 0.4s var(--ease-bounce); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    [dir="rtl"] .toggle-knob { left: auto; right: 4px; }
+    .toggle-switch.is-active { background: var(--accent-primary); border-color: var(--accent-primary); }
+    .toggle-switch.is-active .toggle-knob { transform: translateX(24px); }
+    [dir="rtl"] .toggle-switch.is-active .toggle-knob { transform: translateX(-24px); }
+
+    .lang-pill { padding: 8px 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--border-highlight); border-radius: var(--radius-full); font-size: 0.85rem; font-weight: 600; color: var(--text-primary); cursor: pointer; transition: var(--trans-fast); display: flex; align-items: center; gap: 8px; }
+    .lang-pill:hover { background: rgba(255,255,255,0.1); }
+
+    .app-footer { text-align: center; margin-top: var(--space-48); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .footer-logo { font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; opacity: 0.2; }
+    .footer-text { font-size: 0.75rem; color: var(--text-tertiary); }
+
+    #toast-container { position: fixed; top: 24px; left: 50%; transform: translateX(-50%); z-index: var(--z-toast); display: flex; flex-direction: column; gap: 10px; pointer-events: none; width: 90%; max-width: 400px; }
+    .toast-message { background: var(--bg-elevated); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-highlight); border-radius: var(--radius-md); padding: 16px 20px; display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: toastSlideIn 0.5s var(--ease-bounce) forwards; pointer-events: auto; }
+    [data-theme="light"] .toast-message { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .toast-icon { font-size: 1.2rem; color: var(--success-base); }
+    .toast-icon.error { color: var(--danger-base); }
+    .toast-text { font-size: 0.9rem; font-weight: 600; }
+
+    @keyframes toastSlideIn { 0% { opacity: 0; transform: translateY(-30px) scale(0.9); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes toastSlideOut { 0% { opacity: 1; transform: translateY(0) scale(1); height: auto; margin-bottom: 10px; } 100% { opacity: 0; transform: translateY(-20px) scale(0.9); height: 0; margin-bottom: 0; padding: 0; border: none; } }
+
+    #splash-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg-base); z-index: var(--z-splash); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.8s var(--ease-out-expo), visibility 0.8s; }
+    #splash-screen.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .splash-logo { font-size: 4rem; font-weight: 900; background: linear-gradient(135deg, #fff, var(--accent-primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: pulseLogo 2s infinite alternate ease-in-out; }
+    @keyframes pulseLogo { 0% { filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.2)); transform: scale(1); } 100% { filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.6)); transform: scale(1.05); } }
+    .splash-text { margin-top: 16px; font-size: 1rem; color: var(--text-secondary); letter-spacing: 4px; text-transform: uppercase; }
+    
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); z-index: var(--z-modal); display: none; opacity: 0; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
+    .modal-overlay.is-active { display: flex; opacity: 1; }
+    .modal-content { width: 90%; max-width: 400px; padding: var(--space-32); text-align: center; background: var(--bg-elevated); border: 1px solid var(--border-highlight); border-radius: var(--radius-xl); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.4s var(--ease-bounce); }
+    .modal-overlay.is-active .modal-content { transform: scale(1); }
+    .modal-buttons { display: flex; gap: 12px; margin-top: 24px; }
+    .modal-buttons button { flex: 1; padding: 12px; border-radius: var(--radius-md); font-weight: 600; border: none; cursor: pointer; }
+    .btn-cancel { background: rgba(255,255,255,0.1); color: var(--text-primary); }
+    .btn-confirm { background: var(--danger-base); color: white; }
+
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
-    <div id="splashScreen">
-        <div id="step1" class="step">
-            <div class="loading-text">Loading</div>
-        </div>
+<!-- DEVICE SHEET FULL PRO -->
+<style>
+#device-popup{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(10px);
+  z-index:99999;
+  opacity:0; pointer-events:none;
+  transition:.3s;
+}
+#device-popup.active{
+  opacity:1; pointer-events:all;
+}
 
-        <div id="step2" class="step">
-            <div class="powered-text"> by <span>Drakc apps</span></div>
-        </div>
+.sheet{
+  position:absolute; bottom:0; left:0; width:100%;
+  background:#111;
+  border-radius:24px 24px 0 0;
+  padding:20px 16px 24px;
+  transform:translateY(100%);
+  transition:.4s cubic-bezier(.2,.8,.2,1);
+}
+#device-popup.active .sheet{
+  transform:translateY(0);
+}
 
-        <div id="step3" class="step">
-            <div class="logo-text">مَشاعِر</div>
+.handle{
+  width:40px; height:4px;
+  background:#444; border-radius:10px;
+  margin:0 auto 12px;
+}
+
+.lang-btn{
+  position:absolute; top:12px; right:16px;
+  background:#1b1b1b;
+  border:none; color:#fff;
+  padding:6px 10px;
+  border-radius:10px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.title{
+  text-align:center;
+  font-size:18px; font-weight:800;
+  margin-bottom:6px;
+}
+.sub{
+  text-align:center;
+  font-size:13px; color:#aaa;
+  margin-bottom:16px;
+}
+
+.btn{
+  width:100%; padding:14px;
+  border:none; border-radius:14px;
+  font-weight:700; margin-bottom:10px;
+  cursor:pointer;
+}
+.android{
+  background:linear-gradient(135deg,#8b5cf6,#3b82f6);
+  color:#fff;
+}
+
+.section{
+  font-size:12px; color:#777;
+  margin:10px 0 6px;
+}
+
+.list{ display:flex; flex-direction:column; gap:8px; }
+
+.item{
+  background:#1b1b1b;
+  padding:12px;
+  border-radius:12px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+.footer{
+  margin-top:14px;
+  display:flex; align-items:center; justify-content:center;
+  gap:8px;
+  font-size:13px; color:#ccc;
+  cursor:pointer;
+}
+
+.checkbox{
+  width:18px; height:18px;
+  border:2px solid #555;
+  border-radius:6px;
+  position:relative;
+}
+.checkbox.checked{
+  background:#8b5cf6;
+  border-color:#8b5cf6;
+}
+.checkbox.checked::after{
+  content:"";
+  position:absolute;
+  width:5px; height:9px;
+  border:solid #fff;
+  border-width:0 2px 2px 0;
+  top:1px; left:5px;
+  transform:rotate(45deg);
+}
+</style>
+
+<div id="device-popup">
+  <div class="sheet" id="sheet">
+
+    <div class="handle"></div>
+    <button class="lang-btn" id="langToggle">🌐 EN</button>
+
+    <div class="title"></div>
+    <div class="sub"></div>
+
+    <button class="btn android" id="go-android"></button>
+
+    <div class="section"></div>
+
+    <div class="list">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+
+    <div class="footer" id="toggle">
+      <div class="checkbox" id="check"></div>
+      <span></span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const VERSION = 1;
+  const ANDROID_URL = "https://www.mediafire.com/file/jj44cumosezyxq8/%25D8%25AA%25D8%25B7%25D8%25A8%25D9%258A%25D9%2582_%25D9%2585%25D8%25B4%25D8%25A7%25D8%25B9%25D8%25B1_%25D9%2584%25D9%2584%25D8%25A3%25D9%2586%25D8%25AF%25D8%25B1%25D9%2588%25D9%258A%25D8%25AF_%25D8%25AA%25D8%25AD%25D9%2585%25D9%258A%25D9%2584_%25D8%25A7%25D9%2584%25D8%25A2%25D9%2586.apk/file";
+
+  const popup = document.getElementById("device-popup");
+  const sheet = document.getElementById("sheet");
+  const check = document.getElementById("check");
+
+  let dontShow = false;
+  let lang = localStorage.getItem("popup_lang") || "ar";
+
+  const text = {
+    ar:{
+      title:"تفضيل الأجهزة",
+      sub:"اختر أفضل تجربة",
+      android:"تحميل مشاعر للأندرويد",
+      other:"أنظمة أخرى",
+      items:["iOS (آيفون و آيباد)","ويندوز","ماك","لينكس"],
+      hide:"عدم العرض مجدداً",
+      btn:"change to EN"
+    },
+    en:{
+      title:"Choose Device",
+      sub:"Select your experience",
+      android:"Download MASHAER for Android ",
+      other:"Other Platforms",
+      items:["iOS (iPhone & iPad)","Windows","macOS","Linux"],
+      hide:"Don't show again",
+      btn:"تغيير للعربية"
+    }
+  };
+
+  function applyLang(){
+    const t = text[lang];
+    document.querySelector(".title").innerText = t.title;
+    document.querySelector(".sub").innerText = t.sub;
+    document.getElementById("go-android").innerText = t.android;
+    document.querySelector(".section").innerText = t.other;
+
+    document.querySelectorAll(".item").forEach((el,i)=>{
+      el.innerText = t.items[i];
+    });
+
+    document.querySelector("#toggle span").innerText = t.hide;
+    document.getElementById("langToggle").innerText = "🌐 "+t.btn;
+  }
+
+  document.getElementById("langToggle").onclick = ()=>{
+    lang = (lang === "ar") ? "en" : "ar";
+    localStorage.setItem("popup_lang",lang);
+    applyLang();
+  };
+
+  function shouldShow(){
+    const v = localStorage.getItem("popup_v");
+    const off = localStorage.getItem("popup_off");
+    if(v != VERSION) return true;
+    if(off === "2") return false;
+    return true;
+  }
+
+  function show(){
+    if(!shouldShow()) return;
+    setTimeout(()=>popup.classList.add("active"),1500);
+  }
+
+  function close(){
+    popup.classList.remove("active");
+    localStorage.setItem("popup_v", VERSION);
+    if(dontShow) localStorage.setItem("popup_off","2");
+  }
+
+  document.getElementById("go-android").onclick = ()=>{
+    window.location.href = ANDROID_URL;
+  };
+
+  document.querySelectorAll(".item").forEach(el=>{
+    el.onclick = close;
+  });
+
+  document.getElementById("toggle").onclick = ()=>{
+    dontShow = !dontShow;
+    check.classList.toggle("checked");
+  };
+
+  // drag down close
+  let startY=0;
+  sheet.addEventListener("touchstart",e=>{
+    startY = e.touches[0].clientY;
+  });
+  sheet.addEventListener("touchmove",e=>{
+    let move = e.touches[0].clientY - startY;
+    if(move>0) sheet.style.transform = `translateY(${move}px)`;
+  });
+  sheet.addEventListener("touchend",e=>{
+    let end = e.changedTouches[0].clientY - startY;
+    if(end>120) close();
+    else sheet.style.transform="";
+  });
+
+  applyLang();
+  show();
+})();
+</script>
+
+
+    <div id="splash-screen">
+        <div class="splash-logo">مشاعر</div>
+        <div class="splash-text" id="t-splash-sub">By MDR Studio</div>
+    </div>
+
+    <canvas id="ambient-canvas"></canvas>
+    <div class="bg-mesh-overlay"></div>
+
+    <div id="toast-container"></div>
+
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-content">
+            <i class="ph ph-warning-circle" style="font-size: 3rem; color: var(--danger-base); margin-bottom: 16px; display: block;"></i>
+            <h3 id="t-modal-title" style="margin-bottom: 8px;">تأكيد الحذف</h3>
+            <p id="t-modal-desc" style="color: var(--text-secondary); font-size: 0.9rem;">هل أنت متأكد من رغبتك في الحذف؟ سيكون الحذف نهائي تماما وغير قابل للإسترجاع بعد الحذف</p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" id="btn-modal-cancel">إلغاء</button>
+                <button class="btn-confirm" id="btn-modal-confirm">حذف نهائي</button>
+            </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const splash = document.getElementById('splashScreen');
-            const steps = [
-                document.getElementById('step1'),
-                document.getElementById('step2'),
-                document.getElementById('step3')
-            ];
-
-            const runStep = (index, duration, callback) => {
-                steps[index].classList.add('active');
-                setTimeout(() => {
-                    steps[index].classList.remove('active');
-                    steps[index].classList.add('exit');
-                    setTimeout(callback, 700); 
-                }, duration);
-            };
-
-            // التسلسل الزمني
-            runStep(0, 1500, () => { // Loading لثانيتين
-                runStep(1, 2000, () => { // Powered by لثلاث ثواني
-                    runStep(2, 1500, () => { // مشاعر لثانيتين
-                        splash.style.opacity = '0';
-                        setTimeout(() => {
-                            splash.remove(); // حذف الإنترو نهائياً
-                        }, 1000);
-                    });
-                });
-            });
-        });
-    </script>
-</body>
-</html>
-
-    <div id="toast"></div>
-
-    <main class="app-content">
+    <div id="app-container">
         
-        <section id="page-library" class="page active">
-            <h3 style="margin: 20px 0; text-align: center; font-family: 'Aref Ruqaa';">مَشاعر</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;" id="lib-grid"></div>
-        </section>
+        <section id="view-create" class="view-section is-active">
+            <header class="mb-32">
+                <h1 class="h1 text-gradient" id="t-create-title">إضافة شخصية</h1>
+                <p class="text-subtle" id="t-create-sub">أدخل بيانات الشخصية الجديدة.</p>
+            </header>
 
-        <section id="page-editor" class="page">
-            <div class="canvas-container">
-                <div id="artboard" class="tpl-dark-gold">
-                    <div class="tpl-layer glass-bg"></div>
-                    <div class="tpl-layer glass-item"></div>
-                    <div class="tpl-layer frame"></div>
-                    <div class="tpl-layer texture"></div>
-                    <div class="tpl-layer stars"></div>
-
-                    <div id="node-title" class="drag-item selected" style="top: 15%;">عنوان الدعوة</div>
-                    <div id="node-names" class="drag-item" style="top: 40%; font-size: 2.2rem; font-weight: 800;">أحمد & سارة</div>
-                    <div id="node-desc" class="drag-item" style="top: 65%;">نتشرف بدعوتكم لحضور حفلنا</div>
-                    <div id="node-date" class="drag-item" style="top: 85%; font-size: 0.8rem;">التاريخ: 2026/05/10</div>
-
-                    <div class="watermark" id="wm-label">صُمِم بواسطة مَشاعر </div>
-                </div>
-            </div>
-
-            <div class="scroll-hint"><i class="fa-solid fa-angles-up"></i> اسحب للأعلى لخيارات التخصيص الكاملة</div>
-
-            <div class="control-panel">
-                <span class="prop-title">تعديل المحتوى</span>
-                <textarea id="edit-text" class="input-field" rows="2" oninput="updateNode('innerText', this.value)"></textarea>
-                
-                <div class="btn-flex">
-                    <button class="btn-outline" onclick="updateNode('textAlign', 'right')"><i class="fa-solid fa-align-right"></i></button>
-                    <button class="btn-outline" onclick="updateNode('textAlign', 'center')"><i class="fa-solid fa-align-center"></i></button>
-                    <button class="btn-outline" onclick="updateNode('textAlign', 'left')"><i class="fa-solid fa-align-left"></i></button>
-                </div>
-
-                <span class="prop-title" style="margin-top: 20px;">الخطوط الاحترافية (فتح الخط: 50 نقطة)</span>
-                <div class="font-grid" id="font-market"></div>
-
-                <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px;">
-                    <div style="flex: 1;">
-                        <span class="prop-title">حجم الخط</span>
-                        <input type="range" style="width: 100%; accent-color: var(--gold);" min="10" max="80" id="size-slider" oninput="updateNode('fontSize', this.value+'px')">
+            <div class="glass-panel panel-padding">
+                <form id="form-create-soul">
+                    <div class="input-wrapper">
+                        <label class="input-label" for="inp-name">
+                            <i class="ph ph-user input-icon"></i>
+                            <span id="t-lbl-name">الاسم</span>
+                        </label>
+                        <input type="text" id="inp-name" class="premium-input" placeholder="***" required autocomplete="off">
                     </div>
-                    <input type="color" id="color-picker" style="width: 45px; height: 45px; border: none; background: none;" oninput="updateNode('color', this.value)">
-                </div>
 
-                <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
-                    <label style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
-                        <span>إزالة العلامة المائية (-100 نقطة)</span>
-                        <input type="checkbox" id="check-wm" style="width: 20px; height: 20px;">
-                    </label>
-                </div>
+                    <div class="input-wrapper">
+                        <label class="input-label" for="inp-date">
+                            <i class="ph ph-calendar-blank input-icon"></i>
+                            <span id="t-lbl-date">تاريخ الميلاد</span>
+                        </label>
+                        <input type="date" id="inp-date" class="premium-input" required max="">
+                    </div>
 
-                <button class="btn-action btn-gold" onclick="exportImage()">
-                    <i class="fa-solid fa-cloud-arrow-down"></i> حفظ التصميم (-10 نقاط)
-                </button>
+                    <div class="input-wrapper">
+                        <label class="input-label" for="inp-mood">
+                            <i class="ph ph-sparkle input-icon"></i>
+                            <span id="t-lbl-mood">العلاقة</span>
+                        </label>
+                        <select id="inp-mood" class="premium-input">
+                            <option value="radiant" data-ar="أب" data-en="Dad"></option>
+                            <option value="peaceful" data-ar="أم" data-en="Mom"></option>
+                            <option value="ambitious" data-ar="أخ" data-en="Brother"></option>
+                            <option value="melancholic" data-ar="أخت" data-en="Sister"></option>
+                            <option value="loved1" data-ar="إبن" data-en="Son"></option>
+                            <option value="loved" data-ar="إبنة" data-en="Daughter"></option>
+                            <option value="mystical" data-ar="صديق" data-en="Friend"></option>
+                            <option value="mystical2" data-ar="صديقة" data-en="Girlfriend"></option>
+                            <option value="fy" data-ar="عائلة" data-en="Family"></option>
+                            <option value="me" data-ar="أنا" data-en="Me"></option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-4" id="btn-submit-soul">
+                        <i class="ph ph-magic-wand"></i>
+                        <span id="t-btn-add">حفظ</span>
+                    </button>
+                </form>
             </div>
         </section>
 
-        <section id="page-points" class="page">
-            <div class="scroll-hint"><i class="fa-solid fa-angles-down"></i> اسحب للأعلى قليلا لتدوير العجلة </div>
-
-            <div class="points-tank-container">
-                <div class="tank">
-                    <div class="wave" id="wave-ui"></div>
-                    <div class="tank-val" id="pts-tank">50</div>
+        <section id="view-list" class="view-section">
+            <header class="mb-24" style="display: flex; justify-content: space-between; align-items: flex-end;">
+                <div>
+                    <h1 class="h1 text-gradient" id="t-list-title">قائمة الشخصيات</h1>
+                    <p class="text-subtle" id="t-list-sub">قائمة الشخصيات التي تمت إضافتها.</p>
                 </div>
-                <p style="margin-top: 10px; color: var(--gold); font-weight: 800;">رصيدك الحالي</p>
-            </div>
+                <div style="text-align: end;">
+                    <span class="text-micro" id="t-count-label">العدد</span>
+                    <div style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-mono);" id="count-display">0</div>
+                </div>
+            </header>
 
-            <div style="text-align: center; margin-top: 30px;">
-                <div style="width: 20px; height: 30px; background: #fff; margin: 0 auto; clip-path: polygon(50% 100%, 0 0, 100% 0);"></div>
-                <div id="wheel" class="wheel-box"></div>
-                <button id="spin-btn" class="btn-action btn-gold" style="max-width: 200px; margin: 20px auto;" onclick="spinWheel()">أدر واربح</button>
-                <p id="timer-ui" style="font-size: 0.8rem; color: var(--dim);"></p>
+            <div id="souls-container">
             </div>
         </section>
 
-    </main>
+        <section id="view-settings" class="view-section">
+            <header class="mb-32">
+                <h1 class="h1 text-gradient" id="t-set-title">الإعدادات</h1>
+                <p class="text-subtle" id="t-set-sub">تخصيص إعدادات التطبيق.</p>
+            </header>
 
-    <nav class="bottom-nav">
-        <div class="nav-item active" onclick="nav('page-library', this)"><i class="fa-solid fa-images"></i><span>المكتبة</span></div>
-        <div class="nav-item" onclick="nav('page-editor', this)"><i class="fa-solid fa-wand-magic-sparkles"></i><span>المحرر</span></div>
-        <div class="nav-item" onclick="nav('page-points', this)"><i class="fa-solid fa-coins"></i><span>النقاط</span></div>
-    </nav>
+            <div class="settings-group">
+                <div class="settings-label-main" id="t-grp-pref">التفضيلات المرئية</div>
+                <div class="glass-panel">
+                    
+                    <div class="setting-item" id="btn-toggle-theme">
+                        <div class="setting-info">
+                            <span class="setting-title" id="t-set-theme">المظهر الداكن</span>
+                            <span class="setting-desc" id="t-set-theme-desc">تقليل إجهاد العين</span>
+                        </div>
+                        <div class="toggle-switch active" id="ui-switch-theme">
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+
+                    <div class="setting-item" id="btn-toggle-fx">
+                        <div class="setting-info">
+                            <span class="setting-title" id="t-set-fx">تأثيرات الخلفية</span>
+                            <span class="setting-desc" id="t-set-fx-desc">حركة جزيئات الخلفية</span>
+                        </div>
+                        <div class="toggle-switch active" id="ui-switch-fx">
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-label-main" id="t-grp-lang">اللغة / Language</div>
+                <div class="glass-panel">
+                    
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <span class="setting-title" id="t-set-lang">اللغة</span>
+                            <span class="setting-desc" id="t-set-lang-desc">تغيير لغة العرض</span>
+                        </div>
+                        <button class="lang-pill" id="btn-switch-lang">
+                            <i class="ph ph-translate"></i>
+                            <span id="ui-lang-label">English</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <div class="settings-label-main" id="t-grp-data">البيانات المحلية</div>
+                <div class="glass-panel">
+                    
+                    <div class="setting-item" style="cursor: pointer;" id="btn-export-data">
+                        <div class="setting-info">
+                            <span class="setting-title" id="t-set-export" style="color: var(--accent-secondary);">تصدير البيانات</span>
+                            <span class="setting-desc" id="t-set-export-desc">حفظ بيانات الشخصيات كملف</span>
+                        </div>
+                        <i class="ph ph-download-simple" style="font-size: 1.2rem; color: var(--accent-secondary);"></i>
+                    </div>
+
+                    <div class="setting-item" style="cursor: pointer;" id="btn-clear-all">
+                        <div class="setting-info">
+                            <span class="setting-title" style="color: var(--danger-base);" id="t-set-clear">حذف جميع البيانات</span>
+                            <span class="setting-desc" id="t-set-clear-desc">سيتم حذف جميع الشخصيات نهائياً</span>
+                        </div>
+                        <i class="ph ph-trash" style="font-size: 1.2rem; color: var(--danger-base);"></i>
+                    </div>
+
+                </div>
+            </div>
+
+            <footer class="app-footer">
+                <div class="footer-logo">MASHAER</div>
+                <div class="footer-text" id="t-footer-dev">Made By MDR Studio</div>
+                <div class="footer-text" style="opacity: 0.5;">v1.3.0</div>
+            </footer>
+        </section>
+
+        <section id="view-notifications" class="view-section">
+            <header class="mb-32">
+                <h1 class="h1 text-gradient" id="t-notif-title">الإشعارات</h1>
+                <p class="text-subtle" id="t-notif-sub">آخر التحديثات والتنبيهات.</p>
+            </header>
+            <div id="notif-container" style="display: flex; flex-direction: column; gap: 16px;">
+                </div>
+        </section>
+
+    </div> 
+    
+    <div class="bottom-nav-wrapper">
+        <nav class="bottom-nav">
+            <div class="nav-item is-active" data-target="view-create">
+                <i class="ph ph-plus-circle nav-item-icon"></i>
+                <span class="nav-item-label" id="t-nav-add">إضافة</span>
+            </div>
+            <div class="nav-item" data-target="view-list">
+                <i class="ph ph-infinity nav-item-icon"></i>
+                <span class="nav-item-label" id="t-nav-souls">الشخصيات</span>
+            </div>
+            <div class="nav-item" data-target="view-notifications" style="position: relative;">
+                <i class="ph ph-bell nav-item-icon"></i>
+                <div id="nav-notif-dot" style="position: absolute; top: 12px; right: 28%; width: 8px; height: 8px; background: var(--danger-base); border-radius: 50%; box-shadow: 0 0 5px var(--danger-base); display: none;"></div>
+                <span class="nav-item-label" id="t-nav-notif">الإشعارات</span>
+            </div>
+            <div class="nav-item" data-target="view-settings">
+                <i class="ph ph-sliders-horizontal nav-item-icon"></i>
+                <span class="nav-item-label" id="t-nav-set">الإعدادات</span>
+            </div>
+        </nav>
+    </div>
 
     <script>
-        let data = { points: 50, lastSpin: 0, unlockedFonts: [], activeNodeId: 'node-title' };
+        const Dictionary = {
+            ar: {
+                splashSub: "By MDR Studio",
+                navAdd: "إضافة", navSouls: "الشخصيات", navSet: "الإعدادات", navNotif: "الإشعارات",
+                createTitle: "إضافة شخصية", createSub: "أدخل بيانات الشخصية الجديدة.",
+                lblName: "الاسم ", lblDate: "تاريخ الميلاد", lblMood: "العلاقة",
+                btnAdd: "حفظ",
+                listTitle: "قائمة الشخصيات", listSub: "قائمة الشخصيات التي تمت إضافتها.", countLabel: "العدد",
+                emptyList: "لا توجد بيانات.<br>انتقل لقسم ( إضافة ) لإدخال شخصية جديدة.",
+                setTitle: "الإعدادات", setSub: "تخصيص إعدادات التطبيق.",
+                notifTitle: "الإشعارات", notifSub: "آخر التحديثات والتنبيهات.",
+                grpPref: "التفضيلات المرئية", setTheme: "المظهر الداكن", setThemeDesc: "تقليل إجهاد العين",
+                setFx: "تأثيرات الخلفية", setFxDesc: "حركة جزيئات الخلفية",
+                grpLang: "اللغة / Language", setLang: "اللغة", setLangDesc: "تغيير لغة العرض", langBtn: "English",
+                grpData: "البيانات المحلية", setExport: "تصدير البيانات", setExportDesc: "حفظ بيانات الشخصيات كملف",
+                setClear: "حذف جميع البيانات", setClearDesc: "سيتم حذف جميع الشخصيات نهائياً",
+                footerDev: " By MDR Studio",
+                timeUnits: ["سنوات", "أشهر", "أيام", "ساعات", "دقائق", "ثواني"],
+                insights: {
+                    bornDay: "يوم الولادة",
+                    zodiac: "البرج",
+                    moon: "القمر عند الميلاد",
+                    path: "مسار الحياة",
+                    heart: "نبضات القلب (نسبة تقديرية)",
+                    sun: "أيام منذ الولادة",
+                    next: "ميلادك القادم بعد"
+                },
+                days: ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+                zodiacNames: [
+                    "الجدي ♑", "الدلو ♒", "الحوت ♓", "الحمل ♈", "الثور ♉", "الجوزاء ♊", 
+                    "السرطان ♋", "الأسد ♌", "العذراء ♍", "الميزان ♎", "العقرب ♏", "القوس ♐"
+                ],
+                moonPhases: [
+                    "محاق 🌑", "هلال متزايد 🌒", "تربيع أول 🌓", "أحدب متزايد 🌔", 
+                    "بدر 🌕", "أحدب متناقص 🌖", "تربيع أخير 🌗", "هلال متناقص 🌘"
+                ],
+                numerology: {
+  1: "القيادة والاستقلالية شخص يحب يبدأ بنفسه ويعتمد على قراراته",
+  2: "السلام والدبلوماسية هادئ يفضل التفاهم ويكره المشاكل",
+  3: "التعبير والإبداع اجتماعي ويحب يعبر عن نفسه بالكلام او الفن",
+  4: "النظام والأساس عملي منظم ويحب الاستقرار وبناء شيء ثابت",
+  5: "الحرية والمغامرة يمل بسرعة يحب التغيير والتجارب الجديدة",
+  6: "الرعاية والمسؤولية يهتم بالناس حوله ويتحمل المسؤوليات",
+  7: "التحليل والروحانية يفكر بعمق يحب العزلة والبحث عن المعنى",
+  8: "القوة والوفرة طموح يحب النجاح المادي والسيطرة",
+  9: "الإنسانية والحكمة متفهم يساعد الآخرين ويفكر بشكل انساني"
 
-        const config = {
-            fonts: [
-                { id: 'Tajawal', label: 'تجوال (مجاني)', premium: false },
-                { id: 'Cairo', label: 'القاهرة', premium: false },
-                { id: 'Aref Ruqaa', label: 'رقعة فخم', premium: true },
-                { id: 'Lalezar', label: 'لاله زار', premium: true },
-                { id: 'Amiri', label: 'أميري ملكي', premium: true },
-                { id: 'Mada', label: 'مدا عصري', premium: true }
-            ],
-            templates: [
-                { id: 'tpl-dark-gold', name: 'أونيكس ذهبي', class: 'tpl-dark-gold' },
-                { id: 'tpl-glass', name: 'زجاجي مودرن', class: 'tpl-glass' },
-                { id: 'tpl-marble', name: 'رخام أبيض', class: 'tpl-marble' },
- { id: 'tpl-night', name: 'سماء مرصعة <i class="fa-solid fa-crown top-icon"></i>', class: 'tpl-night' },
-                { id: 'tpl-minimal', name: 'بساطة وردية', class: 'tpl-minimal' },
- { id: 'tpl-royal-red', name: 'أحمر ملكي <i class="fa-solid fa-crown top-icon"></i>', class: 'tpl-royal-red' },
-                { id: 'tpl-neon', name: 'نيون أزرق', class: 'tpl-neon' },
-  { id: 'tpl-vintage', name: 'ورق كلاسيك <i class="fa-solid fa-crown top-icon"></i>', class: 'tpl-vintage' },
- { id: 'tpl-nature', name: 'طبيعة خضراء <i class="fa-solid fa-leaf top-icon"></i>', class: 'tpl-nature' },
-                { id: 'tpl-sunset', name: 'غروب ساحر', class: 'tpl-sunset' }
-            ]
+                },
+                toastAdd: "تم إضافة الشخصية بنجاح",
+                toastDel: "تم حذف الشخصية بنجاح",
+                toastClear: "تم حذف جميع البيانات",
+                toastExport: "تم التصدير بنجاح",
+                modalTitle: "تأكيد الحذف", modalDesc: "هل أنت متأكد من رغبتك في الحذف؟ سيكون الحذف نهائي تماما وغير قابل للإسترجاع بعد الحذف",
+                btnCancel: "إلغاء", btnConfirm: "حذف نهائي"
+            },
+            en: {
+                splashSub: "By MDR Studio",
+                navAdd: "Add", navSouls: "People", navSet: "Settings", navNotif: "Notifications",
+                createTitle: "Add Person", createSub: "Enter the new person details.",
+                lblName: "Name", lblDate: "Birth Date", lblMood: "Relationship",
+                btnAdd: "Save",
+                listTitle: "People List", listSub: "List of added people.", countLabel: "TOTAL",
+                emptyList: "No data found.<br>Navigate to Add to insert a new person.",
+                setTitle: "Settings", setSub: "App configurations.",
+                notifTitle: "Notifications", notifSub: "Latest updates and alerts.",
+                grpPref: "Visual Preferences", setTheme: "Dark Mode", setThemeDesc: "Reduce eye strain",
+                setFx: "Background Effects", setFxDesc: "Background animation",
+                grpLang: "Language / اللغة", setLang: "Language", setLangDesc: "Change language", langBtn: "العربية",
+                grpData: "Local Data", setExport: "Export Data", setExportDesc: "Save people data to file",
+                setClear: "Clear All Data", setClearDesc: "Delete all people permanently",
+                footerDev: "Made By MDR Studio",
+                timeUnits: ["Years", "Months", "Days", "Hours", "Mins", "Secs"],
+                insights: {
+                    bornDay: "Birth Day",
+                    zodiac: "Zodiac Sign",
+                    moon: "Moon Phase",
+                    path: "Life Path",
+                    heart: "Estimated Heartbeats",
+                    sun: "Days Alive",
+                    next: "Next Birthday"
+                },
+                days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                zodiacNames: [
+                    "Capricorn ♑", "Aquarius ♒", "Pisces ♓", "Aries ♈", "Taurus ♉", "Gemini ♊", 
+                    "Cancer ♋", "Leo ♌", "Virgo ♍", "Libra ♎", "Scorpio ♏", "Sagittarius ♐"
+                ],
+                moonPhases: [
+                    "New Moon 🌑", "Waxing Crescent 🌒", "First Quarter 🌓", "Waxing Gibbous 🌔", 
+                    "Full Moon 🌕", "Waning Gibbous 🌖", "Third Quarter 🌗", "Waning Crescent 🌘"
+                ],
+             numerology: {
+  1: "Leadership independent takes initiative and relies on own decisions",
+  2: "Peace calm prefers harmony and avoids conflict",
+  3: "Expression social enjoys speaking and showing creativity",
+  4: "Order practical organized builds stable foundations",
+  5: "Adventure loves freedom change and new experiences",
+  6: "Nurturing caring responsible supports people around",
+  7: "Analysis deep thinker enjoys solitude and seeking meaning",
+  8: "Power ambitious focused on success control and results",
+  9: "Wisdom understanding helps others and thinks broadly"
+},
+                toastAdd: "Person added successfully",
+                toastDel: "Person deleted successfully",
+                toastClear: "All data cleared",
+                toastExport: "Exported successfully",
+                modalTitle: "Confirm Deletion", modalDesc: "Are you sure you want to delete? This is permanent and cannot be undone.",
+                btnCancel: "Cancel", btnConfirm: "Delete"
+            }
         };
 
-        window.onload = () => {
-            const saved = localStorage.getItem('mashaer_master_v1');
-            if(saved) data = JSON.parse(saved);
-            refreshUI();
-            buildLibrary();
-            buildFonts();
-            initDrag();
-            checkSpin();
-        };
+        class CalculationEngine {
+            static getZodiac(day, month, lang) {
+                const dates = [19, 18, 20, 19, 20, 20, 22, 22, 22, 22, 21, 21];
+                let idx = month - 1;
+                if (day > dates[idx]) { idx = (idx + 1) % 12; }
+                return Dictionary[lang].zodiacNames[idx];
+            }
 
-        function save() {
-            localStorage.setItem('mashaer_master_v1', JSON.stringify(data));
-            refreshUI();
+            static getLifePathNumber(dateStr) {
+                let digits = dateStr.replace(/-/g, '').split('').map(Number);
+                let sum = digits.reduce((a, b) => a + b, 0);
+                while (sum > 9) {
+                    sum = sum.toString().split('').map(Number).reduce((a, b) => a + b, 0);
+                }
+                return sum;
+            }
+
+            static getMoonPhase(date) {
+                let year = date.getFullYear();
+                let month = date.getMonth() + 1;
+                let day = date.getDate();
+                let r = year % 100;
+                r %= 19;
+                if (r > 9){ r -= 19;}
+                r = ((r * 11) % 30) + parseInt(month) + parseInt(day);
+                if (month < 3){r += 2;}
+                r -= ((year<2000)? 4: 8.3);
+                r = Math.floor(r + 0.5) % 30;
+                let phaseIndex = (r < 0) ? r + 30 : r;
+                
+                if (phaseIndex < 2) return 0; 
+                if (phaseIndex < 7) return 1; 
+                if (phaseIndex < 11) return 2; 
+                if (phaseIndex < 14) return 3; 
+                if (phaseIndex < 17) return 4; 
+                if (phaseIndex < 22) return 5; 
+                if (phaseIndex < 26) return 6; 
+                if (phaseIndex < 29) return 7; 
+                return 0;
+            }
+
+            static formatNumber(num) {
+                return new Intl.NumberFormat('en-US').format(Math.floor(num));
+            }
         }
 
-        function refreshUI() {
-            document.getElementById('pts-tank').innerText = data.points;
-            document.getElementById('wave-ui').style.height = Math.min(data.points / 5, 100) + '%';
-        }
+        class ParticleSystem {
+            constructor() {
+                this.canvas = document.getElementById('ambient-canvas');
+                this.ctx = this.canvas.getContext('2d', { alpha: true });
+                this.particles = [];
+                this.isActive = true;
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+                this.initParticles();
+                this.animate();
+            }
 
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.innerText = msg; t.style.display = 'block';
-            setTimeout(() => t.style.display = 'none', 3000);
-        }
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
 
-        function nav(pageId, el) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-        }
+            initParticles() {
+                this.particles = [];
+                const numParticles = window.innerWidth < 768 ? 30 : 60;
+                for (let i = 0; i < numParticles; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        radius: Math.random() * 2 + 0.5,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        alpha: Math.random() * 0.5 + 0.1
+                    });
+                }
+            }
 
-        function buildLibrary() {
-            const grid = document.getElementById('lib-grid');
-            grid.innerHTML = '';
-            config.templates.forEach(t => {
-                const item = document.createElement('div');
-                item.className = 'font-card';
-                item.style.height = '80px';
-                item.style.display = 'flex';
-                item.style.alignItems = 'center';
-                item.style.justifyContent = 'center';
-                item.innerHTML = t.name;
-                item.onclick = () => {
-                    document.getElementById('artboard').className = t.class;
-                    nav('page-editor', document.querySelectorAll('.nav-item')[1]);
-                };
-                grid.appendChild(item);
-            });
-        }
+            toggle(state) {
+                this.isActive = state;
+                if(state) this.canvas.style.opacity = 0.8;
+                else this.canvas.style.opacity = 0;
+            }
 
-        function buildFonts() {
-            const market = document.getElementById('font-market');
-            market.innerHTML = '';
-            config.fonts.forEach(f => {
-                const unlocked = !f.premium || data.unlockedFonts.includes(f.id);
-                const card = document.createElement('div');
-                card.className = `font-card ${f.premium ? 'premium' : ''} ${unlocked ? 'unlocked' : ''}`;
-                card.style.fontFamily = f.id;
-                card.innerText = f.label;
-                card.onclick = () => {
-                    if(unlocked) {
-                        updateNode('fontFamily', f.id);
-                        document.querySelectorAll('.font-card').forEach(c => c.classList.remove('active'));
-                        card.classList.add('active');
-                    } else {
-                        if(confirm(`فتح هذا الخط مقابل 50 نقطة؟`)) {
-                            if(data.points >= 50) {
-                                data.points -= 50;
-                                data.unlockedFonts.push(f.id);
-                                save();
-                                buildFonts();
-                                showToast("تم فتح الخط!");
-                            } else { showToast("نقاطك غير كافية!"); }
+            animate() {
+                if (!this.isActive) {
+                    requestAnimationFrame(() => this.animate());
+                    return;
+                }
+
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                const pColor = isDark ? '255, 255, 255' : '139, 92, 246';
+                
+                for (let i = 0; i < this.particles.length; i++) {
+                    let p = this.particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > this.canvas.width) p.vx = -p.vx;
+                    if (p.y < 0 || p.y > this.canvas.height) p.vy = -p.vy;
+
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(${pColor}, ${p.alpha})`;
+                    this.ctx.fill();
+
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        let p2 = this.particles[j];
+                        let dx = p.x - p2.x;
+                        let dy = p.y - p2.y;
+                        let dist = Math.sqrt(dx*dx + dy*dy);
+
+                        if (dist < 100) {
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(p.x, p.y);
+                            this.ctx.lineTo(p2.x, p2.y);
+                            let alphaLine = (100 - dist) / 100 * 0.15;
+                            this.ctx.strokeStyle = `rgba(${pColor}, ${alphaLine})`;
+                            this.ctx.stroke();
                         }
                     }
-                };
-                market.appendChild(card);
-            });
-        }
-
-        function initDrag() {
-            const items = document.querySelectorAll('.drag-item');
-            items.forEach(item => {
-                let startX, startY;
-                const start = (e) => {
-                    selectItem(item.id);
-                    const touch = e.type.includes('touch') ? e.touches[0] : e;
-                    startX = touch.clientX - item.offsetLeft;
-                    startY = touch.clientY - item.offsetTop;
-                    item.isDragging = true;
-                };
-                const move = (e) => {
-                    if(!item.isDragging) return;
-                    const touch = e.type.includes('touch') ? e.touches[0] : e;
-                    item.style.left = (touch.clientX - startX) + 'px';
-                    item.style.top = (touch.clientY - startY) + 'px';
-                };
-                const end = () => { item.isDragging = false; };
-                item.addEventListener('mousedown', start);
-                item.addEventListener('touchstart', start);
-                window.addEventListener('mousemove', move);
-                window.addEventListener('touchmove', move);
-                window.addEventListener('mouseup', end);
-                window.addEventListener('touchend', end);
-            });
-        }
-
-        function selectItem(id) {
-            data.activeNodeId = id;
-            document.querySelectorAll('.drag-item').forEach(i => i.classList.remove('selected'));
-            const el = document.getElementById(id);
-            el.classList.add('selected');
-            document.getElementById('edit-text').value = el.innerText;
-            document.getElementById('size-slider').value = parseInt(window.getComputedStyle(el).fontSize);
-            document.getElementById('color-picker').value = rgbToHex(window.getComputedStyle(el).color);
-        }
-
-        function updateNode(prop, val) {
-            const el = document.getElementById(data.activeNodeId);
-            el.style[prop] = val;
-            if(prop === 'innerText') el.innerText = val;
-        }
-
-        function rgbToHex(rgb) {
-            if(!rgb || rgb.startsWith('#')) return rgb;
-            const res = rgb.match(/\d+/g);
-            return "#" + ((1 << 24) + (+res[0] << 16) + (+res[1] << 8) + +res[2]).toString(16).slice(1);
-        }
-
-        function checkSpin() {
-            const rem = (15*60*60*1000) - (Date.now() - data.lastSpin);
-            if(rem > 0) {
-                document.getElementById('spin-btn').disabled = true;
-                const h = Math.floor(rem/3600000);
-                const m = Math.floor((rem%3600000)/60000);
-                document.getElementById('timer-ui').innerText = `المحاولة القادمة بعد ${h}س و ${m}د`;
-            } else {
-                document.getElementById('spin-btn').disabled = false;
-                document.getElementById('timer-ui').innerText = "العجلة جاهزة!";
+                }
+                requestAnimationFrame(() => this.animate());
             }
         }
 
-        function spinWheel() {
-            const wheel = document.getElementById('wheel');
-            const deg = 3600 + Math.floor(Math.random() * 360);
-            wheel.style.transform = `rotate(${deg}deg)`;
-            document.getElementById('spin-btn').disabled = true;
-            setTimeout(() => {
-                const won = Math.floor(Math.random() * 41) + 10;
-                data.points += won;
-                data.lastSpin = Date.now();
-                save();
-                showToast(`ربحت ${won} نقطة!`);
-                checkSpin();
-            }, 6000);
-        }
+        const MashaerApp = {
+            state: {
+                souls: [],
+                settings: {
+                    lang: 'ar',
+                    theme: 'dark',
+                    fx: true
+                }
+            },
+            
+            // New Notifications Data
+            notificationsData: [
+                { id: 1, titleAr: "كيفية الاستخدام", descAr: "أدخل الاسم وتاريخ الميلاد وصلة القرابة، وسيتم عرض البيانات في قسم الشخصيات", titleEn: "How to Use", descEn: "Enter name, birth date, and relation. Data will appear in the profiles section." },
+                { id: 2, titleAr: "الاتصال بالإنترنت", descAr: "جميع الميزات و التطبيق كامل متاحة بدون إنترنت على نظام اندرويد فقط", titleEn: "Internet Connection", descEn: "All features are available offline on Android only!" },
+                
 
-        function exportImage() {
-            const delWm = document.getElementById('check-wm').checked;
-            const total = 10 + (delWm ? 100 : 0);
-            if(data.points < total) {
-                showToast(`تحتاج ${total} نقطة! رصيدك: ${data.points}`);
-                return;
+            ],
+            hasNewNotif: true,
+            lastRealNotif: null,
+
+            ui: {},
+            timerInterval: null,
+            particleSys: null,
+            targetDeleteId: null,
+
+            init() {
+                this.cacheDOM();
+                this.loadState();
+                
+                this.particleSys = new ParticleSystem();
+                this.particleSys.toggle(this.state.settings.fx);
+                
+                const today = new Date().toISOString().split('T')[0];
+                this.ui.inpDate.setAttribute('max', today);
+
+                this.applySettings();
+                this.bindEvents();
+                
+                this.renderSoulsList();
+                this.renderNotificationsList();
+                this.startTimerEngine();
+
+                // Check Notifications Red Dot
+                if(this.hasNewNotif) {
+                    document.getElementById('nav-notif-dot').style.display = 'block';
+                }
+
+                // Show Real App Notification on Load
+                setTimeout(() => {
+                    const lang = this.state.settings.lang;
+                    this.showRealNotification(
+                        lang === 'ar' ? "تذكير" : "Reminder", 
+                        lang === 'ar' ? "لا تجعل تطبيق مشاعر يلهيك عن فروضك الدينية" : "Use the app, but don’t forget your obligations"
+                    );
+                }, 2000);
+
+                setTimeout(() => {
+                    document.getElementById('splash-screen').classList.add('is-hidden');
+                }, 1500);
+            },
+
+            cacheDOM() {
+                this.ui = {
+                    navItems: document.querySelectorAll('.nav-item'),
+                    views: document.querySelectorAll('.view-section'),
+                    formCreate: document.getElementById('form-create-soul'),
+                    inpName: document.getElementById('inp-name'),
+                    inpDate: document.getElementById('inp-date'),
+                    inpMood: document.getElementById('inp-mood'),
+                    listContainer: document.getElementById('souls-container'),
+                    countDisplay: document.getElementById('count-display'),
+                    btnTheme: document.getElementById('btn-toggle-theme'),
+                    swTheme: document.getElementById('ui-switch-theme'),
+                    btnFx: document.getElementById('btn-toggle-fx'),
+                    swFx: document.getElementById('ui-switch-fx'),
+                    btnLang: document.getElementById('btn-switch-lang'),
+                    btnExport: document.getElementById('btn-export-data'),
+                    btnClear: document.getElementById('btn-clear-all'),
+                    modal: document.getElementById('confirm-modal'),
+                    btnCancel: document.getElementById('btn-modal-cancel'),
+                    btnConfirm: document.getElementById('btn-modal-confirm'),
+                };
+            },
+
+            loadState() {
+                const stored = localStorage.getItem('mashaer_data_v2');
+                if (stored) {
+                    try {
+                        const parsed = JSON.parse(stored);
+                        this.state.souls = parsed.souls || [];
+                        this.state.settings = { ...this.state.settings, ...parsed.settings };
+                    } catch (e) {
+                        console.error("Data corruption detected.");
+                    }
+                }
+            },
+
+            saveState() {
+                localStorage.setItem('mashaer_data_v2', JSON.stringify(this.state));
+            },
+
+            bindEvents() {
+                this.ui.navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        this.ui.navItems.forEach(n => n.classList.remove('is-active'));
+                        item.classList.add('is-active');
+                        
+                        const target = item.getAttribute('data-target');
+                        
+                        // Handle notification dot removal
+                        if (target === 'view-notifications') {
+                            this.hasNewNotif = false;
+                            document.getElementById('nav-notif-dot').style.display = 'none';
+                        }
+
+                        this.ui.views.forEach(v => {
+                            v.classList.remove('is-active');
+                            v.style.animation = 'none';
+                            v.offsetHeight;
+                            v.style.animation = null; 
+                        });
+                        document.getElementById(target).classList.add('is-active');
+                    });
+                });
+
+                // NEW: Save Delay Experience
+                this.ui.formCreate.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    const btn = document.getElementById('btn-submit-soul');
+                    const originalHTML = btn.innerHTML;
+                    const lang = this.state.settings.lang;
+                    const loadingText = lang === 'ar' ? 'جاري التحليل...' : 'Analyzing...';
+                    
+                    btn.disabled = true;
+                    btn.style.opacity = '0.7';
+                    btn.style.cursor = 'not-allowed';
+                    btn.innerHTML = `<i class="ph ph-hourglass-high"></i> <span id="t-btn-add">${loadingText}</span>`;
+
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                        btn.style.cursor = 'pointer';
+                        btn.innerHTML = originalHTML;
+                        this.createSoul();
+                    }, 3500); // 3.5s delay
+                });
+
+                this.ui.btnTheme.addEventListener('click', () => {
+                    this.state.settings.theme = this.state.settings.theme === 'dark' ? 'light' : 'dark';
+                    this.applySettings();
+                    this.saveState();
+                });
+
+                this.ui.btnFx.addEventListener('click', () => {
+                    this.state.settings.fx = !this.state.settings.fx;
+                    this.applySettings();
+                    this.saveState();
+                });
+
+                this.ui.btnLang.addEventListener('click', () => {
+                    this.state.settings.lang = this.state.settings.lang === 'ar' ? 'en' : 'ar';
+                    this.applySettings();
+                    this.renderSoulsList(); 
+                    this.renderNotificationsList();
+                    this.saveState();
+                });
+
+                this.ui.btnExport.addEventListener('click', () => this.exportData());
+                this.ui.btnClear.addEventListener('click', () => {
+                    if(confirm(Dictionary[this.state.settings.lang].modalDesc)) {
+                        this.state.souls = [];
+                        this.saveState();
+                        this.renderSoulsList();
+                        this.showToast(Dictionary[this.state.settings.lang].toastClear, 'success');
+                    }
+                });
+
+                this.ui.btnCancel.addEventListener('click', () => this.closeModal());
+                this.ui.btnConfirm.addEventListener('click', () => {
+                    if (this.targetDeleteId) {
+                        this.state.souls = this.state.souls.filter(s => s.id !== this.targetDeleteId);
+                        this.saveState();
+                        this.renderSoulsList();
+                        this.showToast(Dictionary[this.state.settings.lang].toastDel, 'success');
+                    }
+                    this.closeModal();
+                });
+            },
+
+            applySettings() {
+                const s = this.state.settings;
+                const L = Dictionary[s.lang];
+
+                document.body.setAttribute('data-theme', s.theme);
+                s.theme === 'dark' ? this.ui.swTheme.classList.add('is-active') : this.ui.swTheme.classList.remove('is-active');
+                
+                s.fx ? this.ui.swFx.classList.add('is-active') : this.ui.swFx.classList.remove('is-active');
+                this.particleSys.toggle(s.fx);
+
+                document.documentElement.lang = s.lang;
+                document.documentElement.dir = s.lang === 'ar' ? 'rtl' : 'ltr';
+
+                document.getElementById('t-splash-sub').innerText = L.splashSub;
+                
+                document.getElementById('t-nav-add').innerText = L.navAdd;
+                document.getElementById('t-nav-souls').innerText = L.navSouls;
+                document.getElementById('t-nav-set').innerText = L.navSet;
+                document.getElementById('t-nav-notif').innerText = L.navNotif;
+                
+                document.getElementById('t-create-title').innerText = L.createTitle;
+                document.getElementById('t-create-sub').innerText = L.createSub;
+                document.getElementById('t-lbl-name').innerText = L.lblName;
+                document.getElementById('t-lbl-date').innerText = L.lblDate;
+                document.getElementById('t-lbl-mood').innerText = L.lblMood;
+                document.getElementById('t-btn-add').innerText = L.btnAdd;
+
+                document.getElementById('t-list-title').innerText = L.listTitle;
+                document.getElementById('t-list-sub').innerText = L.listSub;
+                document.getElementById('t-count-label').innerText = L.countLabel;
+
+                document.getElementById('t-notif-title').innerText = L.notifTitle;
+                document.getElementById('t-notif-sub').innerText = L.notifSub;
+
+                document.getElementById('t-set-title').innerText = L.setTitle;
+                document.getElementById('t-set-sub').innerText = L.setSub;
+                
+                document.getElementById('t-grp-pref').innerText = L.grpPref;
+                document.getElementById('t-set-theme').innerText = L.setTheme;
+                document.getElementById('t-set-theme-desc').innerText = L.setThemeDesc;
+                document.getElementById('t-set-fx').innerText = L.setFx;
+                document.getElementById('t-set-fx-desc').innerText = L.setFxDesc;
+                
+                document.getElementById('t-grp-lang').innerText = L.grpLang;
+                document.getElementById('t-set-lang').innerText = L.setLang;
+                document.getElementById('t-set-lang-desc').innerText = L.setLangDesc;
+                document.getElementById('ui-lang-label').innerText = L.langBtn;
+
+                document.getElementById('t-grp-data').innerText = L.grpData;
+                document.getElementById('t-set-export').innerText = L.setExport;
+                document.getElementById('t-set-export-desc').innerText = L.setExportDesc;
+                document.getElementById('t-set-clear').innerText = L.setClear;
+                document.getElementById('t-set-clear-desc').innerText = L.setClearDesc;
+                
+                document.getElementById('t-footer-dev').innerText = L.footerDev;
+
+                document.getElementById('t-modal-title').innerText = L.modalTitle;
+                document.getElementById('t-modal-desc').innerText = L.modalDesc;
+                this.ui.btnCancel.innerText = L.btnCancel;
+                this.ui.btnConfirm.innerText = L.btnConfirm;
+
+                const moodSelect = this.ui.inpMood;
+                Array.from(moodSelect.options).forEach(opt => {
+                    const text = opt.getAttribute(`data-${s.lang}`);
+                    const icon = opt.innerHTML.split(' ').pop(); 
+                    opt.innerHTML = `${text}`; // Simplified without forcing emoji if not wanted, but preserving if exists
+                });
+            },
+
+            createSoul() {
+                const name = this.ui.inpName.value.trim();
+                const dateStr = this.ui.inpDate.value;
+                const moodVal = this.ui.inpMood.value;
+
+                if (!name || !dateStr) return;
+
+                const newSoul = {
+                    id: 'soul_' + Date.now() + Math.random().toString(36).substr(2, 5),
+                    name: name,
+                    birthdate: dateStr, 
+                    rawMood: moodVal,
+                    created_at: new Date().toISOString()
+                };
+
+                this.state.souls.unshift(newSoul); 
+                this.saveState();
+                
+                this.ui.formCreate.reset();
+                this.renderSoulsList();
+                this.showToast(Dictionary[this.state.settings.lang].toastAdd, 'success');
+                
+                this.ui.navItems[1].click();
+            },
+
+            openModal(id) {
+                this.targetDeleteId = id;
+                this.ui.modal.classList.add('is-active');
+            },
+
+            closeModal() {
+                this.targetDeleteId = null;
+                this.ui.modal.classList.remove('is-active');
+            },
+
+            toggleCard(id) {
+                const card = document.getElementById(id);
+                if(card) {
+                    card.classList.toggle('is-open');
+                }
+            },
+
+            renderNotificationsList() {
+                const container = document.getElementById('notif-container');
+                const lang = this.state.settings.lang;
+                let html = '';
+                
+                this.notificationsData.forEach(n => {
+                    const title = lang === 'ar' ? n.titleAr : n.titleEn;
+                    const desc = lang === 'ar' ? n.descAr : n.descEn;
+                    
+                    html += `
+                        <div class="glass-panel" style="padding: 16px; border-left: 4px solid var(--accent-primary); border-right: ${lang === 'ar' ? '4px solid var(--accent-primary)' : 'none'}; ${lang === 'ar' ? 'border-left: none;' : ''}">
+                            <div style="font-weight: bold; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                                <i class="ph ph-bell-ringing" style="color: var(--accent-primary);"></i> ${title}
+                            </div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">${desc}</div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = html;
+            },
+
+            renderSoulsList() {
+                const container = this.ui.listContainer;
+                const lang = this.state.settings.lang;
+                const L = Dictionary[lang];
+                
+                this.ui.countDisplay.innerText = this.state.souls.length;
+
+                if (this.state.souls.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <i class="ph ph-users empty-state-icon"></i>
+                            <p style="font-size: 1.1rem; color: var(--text-secondary); line-height: 1.6;">${L.emptyList}</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                this.state.souls.forEach(soul => {
+                    const bDate = new Date(soul.birthdate);
+                    
+                    const dayOfWeek = L.days[bDate.getDay()];
+                    const zodiac = CalculationEngine.getZodiac(bDate.getDate(), bDate.getMonth() + 1, lang);
+                    const lifePathNum = CalculationEngine.getLifePathNumber(soul.birthdate);
+                    const lifePathText = L.numerology[lifePathNum] || "";
+                    
+                    const moonPhaseIdx = CalculationEngine.getMoonPhase(bDate);
+                    const moonPhaseText = L.moonPhases[moonPhaseIdx];
+
+                    const moodOption = document.querySelector(`#inp-mood option[value="${soul.rawMood}"]`);
+                    const moodText = moodOption ? moodOption.getAttribute(`data-${lang}`) : soul.rawMood;
+                    
+                    const initial = soul.name.charAt(0).toUpperCase();
+
+                    html += `
+                    <div class="glass-panel soul-card" id="${soul.id}">
+                        <div class="soul-card-header" onclick="MashaerApp.toggleCard('${soul.id}')">
+                            <div class="soul-identity">
+                                <div class="soul-avatar">${initial}</div>
+                                <div>
+                                    <div class="soul-name">${soul.name}</div>
+                                    <div class="soul-mood-badge">${moodText}</div>
+                                </div>
+                            </div>
+                            <i class="ph ph-caret-down soul-expand-icon"></i>
+                        </div>
+
+                        <div class="soul-card-body-wrapper">
+                            <div class="soul-card-body">
+                                <div class="soul-card-content">
+                                    <div class="soul-divider"></div>
+                                    
+                                    <div class="live-timer-grid">
+                                        <div class="timer-box"><span class="timer-val" id="y_${soul.id}">0</span><span class="timer-label">${L.timeUnits[0]}</span></div>
+                                        <div class="timer-box"><span class="timer-val" id="m_${soul.id}">0</span><span class="timer-label">${L.timeUnits[1]}</span></div>
+                                        <div class="timer-box"><span class="timer-val" id="d_${soul.id}">0</span><span class="timer-label">${L.timeUnits[2]}</span></div>
+                                        <div class="timer-box"><span class="timer-val" id="h_${soul.id}">0</span><span class="timer-label">${L.timeUnits[3]}</span></div>
+                                        <div class="timer-box"><span class="timer-val" id="min_${soul.id}">0</span><span class="timer-label">${L.timeUnits[4]}</span></div>
+                                        <div class="timer-box"><span class="timer-val" id="s_${soul.id}">0</span><span class="timer-label">${L.timeUnits[5]}</span></div>
+                                    </div>
+
+                                    <div class="insights-list">
+                                        <div class="insight-row">
+                                            <div class="insight-icon-wrapper"><i class="ph ph-calendar-star"></i></div>
+                                            <div class="insight-text">${L.insights.bornDay}: <span class="insight-highlight">${dayOfWeek}</span></div>
+                                        </div>
+                                        <div class="insight-row">
+                                            <div class="insight-icon-wrapper"><i class="ph ph-planet"></i></div>
+                                            <div class="insight-text">${L.insights.zodiac}: <span class="insight-highlight">${zodiac}</span></div>
+                                        </div>
+                                        <div class="insight-row">
+                                            <div class="insight-icon-wrapper"><i class="ph ph-moon"></i></div>
+                                            <div class="insight-text">${L.insights.moon}: <span class="insight-highlight">${moonPhaseText}</span></div>
+                                        </div>
+                                        <div class="insight-row">
+                                            <div class="insight-icon-wrapper"><i class="ph ph-hash"></i></div>
+                                            <div class="insight-text">${L.insights.path}: <span class="insight-highlight">${lifePathNum}</span> <br><small style="opacity:0.7;">(${lifePathText})</small></div>
+                                        </div>
+                                        <div class="insight-row">
+                                            <div class="insight-icon-wrapper"><i class="ph ph-heartbeat"></i></div>
+                                            <div class="insight-text">${L.insights.heart}: <br><span class="insight-highlight" id="hb_${soul.id}">...</span></div>
+                                        </div>
+                                        <div class="insight-row">
+                                            <div class="insight-icon-wrapper"><i class="ph ph-sun-horizon"></i></div>
+                                            <div class="insight-text">${L.insights.sun}: <span class="insight-highlight" id="sun_${soul.id}">...</span></div>
+                                        </div>
+                                        <div class="insight-row" style="background: rgba(139, 92, 246, 0.05); border-color: rgba(139, 92, 246, 0.2);">
+                                            <div class="insight-icon-wrapper"><i class="ph ph-cake"></i></div>
+                                            <div class="insight-text">${L.insights.next}: <br><span class="insight-highlight" style="color: var(--accent-primary);" id="nb_${soul.id}">...</span></div>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn btn-danger-ghost" onclick="MashaerApp.openModal('${soul.id}')">
+                                        <i class="ph ph-trash"></i> حذف الشخصية
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+                this.updateLiveCalculations(); 
+            },
+
+            startTimerEngine() {
+                if(this.timerInterval) clearInterval(this.timerInterval);
+                this.timerInterval = setInterval(() => this.updateLiveCalculations(), 1000);
+            },
+
+            updateLiveCalculations() {
+                if (this.state.souls.length === 0) return;
+                
+                const now = new Date();
+                const lang = this.state.settings.lang;
+
+                this.state.souls.forEach(soul => {
+                    const dob = new Date(soul.birthdate);
+                    dob.setHours(0, 0, 0, 0); 
+                    
+                    const diffMs = now - dob;
+
+                    let years = now.getFullYear() - dob.getFullYear();
+                    let months = now.getMonth() - dob.getMonth();
+                    let days = now.getDate() - dob.getDate();
+                    
+                    if (days < 0) {
+                        months--;
+                        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                        days += prevMonth.getDate();
+                    }
+                    if (months < 0) {
+                        years--;
+                        months += 12;
+                    }
+
+                    let hours = now.getHours();
+                    let minutes = now.getMinutes();
+                    let seconds = now.getSeconds();
+
+                    const elY = document.getElementById(`y_${soul.id}`);
+                    if (elY) {
+                        elY.innerText = years;
+                        document.getElementById(`m_${soul.id}`).innerText = months;
+                        document.getElementById(`d_${soul.id}`).innerText = days;
+                        document.getElementById(`h_${soul.id}`).innerText = hours;
+                        document.getElementById(`min_${soul.id}`).innerText = minutes;
+                        document.getElementById(`s_${soul.id}`).innerText = seconds;
+
+                        const totalDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                        const totalMins = Math.floor(diffMs / (1000 * 60));
+                        
+                        const heartbeats = totalMins * 80;
+                        document.getElementById(`hb_${soul.id}`).innerText = CalculationEngine.formatNumber(heartbeats);
+                        
+                        document.getElementById(`sun_${soul.id}`).innerText = CalculationEngine.formatNumber(totalDays);
+
+                        let nextBday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+                        if (now > nextBday) {
+                            nextBday.setFullYear(now.getFullYear() + 1);
+                        }
+                        
+                        const bdayDiffMs = nextBday - now;
+                        const bdayDays = Math.ceil(bdayDiffMs / (1000 * 60 * 60 * 24));
+                        
+                        let bdayStr = "";
+                        if (bdayDays === 0 || bdayDays === 365) {
+                            bdayStr = lang === 'ar' ? "اليوم!" : "Today!";
+                        } else {
+                            bdayStr = lang === 'ar' ? `${bdayDays} يوم` : `${bdayDays} Days`;
+                        }
+                        document.getElementById(`nb_${soul.id}`).innerText = bdayStr;
+                    }
+                });
+            },
+
+            showToast(message, type = 'success') {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'toast-message';
+                
+                const iconClass = type === 'success' ? 'ph-check-circle' : 'ph-warning-circle';
+                const iconColorClass = type === 'success' ? '' : 'error';
+                
+                toast.innerHTML = `
+                    <i class="ph ${iconClass} toast-icon ${iconColorClass}"></i>
+                    <span class="toast-text">${message}</span>
+                `;
+                
+                container.appendChild(toast);
+                
+                setTimeout(() => {
+                    toast.style.animation = 'toastSlideOut 0.4s ease-in forwards';
+                    setTimeout(() => {
+                        if (toast.parentNode) container.removeChild(toast);
+                    }, 400);
+                }, 3500);
+            },
+
+            // NEW: Real App Notification Feature
+            showRealNotification(title, desc) {
+                const contentKey = title + "|" + desc;
+                if (this.lastRealNotif === contentKey) return; // Stays hidden until content changes
+                this.lastRealNotif = contentKey;
+
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                toast.className = 'toast-message';
+                toast.style.display = 'flex';
+                toast.style.justifyContent = 'space-between';
+                toast.style.alignItems = 'flex-start';
+                toast.style.padding = '14px 18px';
+                toast.style.width = '100%';
+                
+                toast.innerHTML = `
+                    <div style="display: flex; gap: 12px; align-items: flex-start; flex: 1;">
+                        <i class="ph ph-app-window toast-icon" style="color: var(--accent-primary); margin-top: 2px;"></i>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 700; font-size: 0.95rem; margin-bottom: 2px;">${title}</div>
+                            <div style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">${desc}</div>
+                        </div>
+                    </div>
+                    <i class="ph ph-x" style="cursor: pointer; color: var(--text-tertiary); font-size: 1.1rem; padding-inline-start: 8px;" onclick="this.parentElement.style.display='none'"></i>
+                `;
+                
+                container.appendChild(toast);
+                
+                // Auto hide after 3 seconds
+                setTimeout(() => {
+                    if (toast.style.display !== 'none') {
+                        toast.style.animation = 'toastSlideOut 0.4s ease-in forwards';
+                        setTimeout(() => {
+                            if (toast.parentNode) container.removeChild(toast);
+                        }, 400);
+                    }
+                }, 3000);
+            },
+
+            exportData() {
+                if (this.state.souls.length === 0) return;
+                
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.state.souls, null, 2));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", "mashaer_people_export.json");
+                document.body.appendChild(downloadAnchorNode); 
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+                
+                this.showToast(Dictionary[this.state.settings.lang].toastExport, 'success');
             }
-            if(!confirm(`سيتم خصم ${total} نقطة للتصدير. استمرار؟`)) return;
-            const wm = document.getElementById('wm-label');
-            if(delWm) wm.style.display = 'none';
-            html2canvas(document.getElementById('artboard'), { scale: 3 }).then(canvas => {
-                const link = document.createElement('a');
-                link.download = `Mashaer_${Date.now()}.png`;
-                link.href = canvas.toDataURL();
-                link.click();
-                data.points -= total;
-                save();
-                showToast("تم الحفظ والخصم!");
-                wm.style.display = 'block';
-            });
-        }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            MashaerApp.init();
+        });
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!navigator.onLine) {
+                document.body.classList.add("offline");
+            }
+        });
     </script>
 </body>
 </html>
